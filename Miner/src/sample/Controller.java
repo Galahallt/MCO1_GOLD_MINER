@@ -28,6 +28,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     Point gold;                 // Coordinate of gold
 
+    Point bronze;
+
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
     {
