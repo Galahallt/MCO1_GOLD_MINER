@@ -28,8 +28,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     Point gold;                 // Coordinate of gold
 
-    Point bronze;
-
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
     {
@@ -51,8 +49,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         ImageView miner = grid.miner;
         smart = menu.rbIntSmart.isSelected();
 
-        System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
-        window.setScene(grid.buildGrid(size));
+        System.out.println(gold.getX() + " " + gold.getY());
+        window.setScene(grid.buildGrid(size, pits, beacons, gold));
         window.show();
     }
 
@@ -93,8 +91,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 return false;
             }
             else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
-                Point p = new Point(x, y);
-                return !pits.contains(p) && !beacons.contains(p);   // If already a pit/beacon
+                gold = new Point(x, y);
+                return !pits.contains(gold) && !beacons.contains(gold);   // If already a pit/beacon
             }
             else {
                 gold = null;
