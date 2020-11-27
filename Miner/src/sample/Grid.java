@@ -15,8 +15,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.BROWN;
 
 public class Grid
 {
@@ -24,6 +23,8 @@ public class Grid
     public ImageView miner = new ImageView("sample/Miner.png");
 
     GridPane grid = new GridPane();
+
+    String name = "paolo";
 
     //Debug Miner moves
     Button btnUp = new Button("Up");
@@ -62,7 +63,7 @@ public class Grid
 
         grid.add(scroll, 1, 0);
 
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setPadding(new Insets(10, 10, 10, 20));
 
         grid.setVgap(8);
         grid.setHgap(10);
@@ -75,7 +76,7 @@ public class Grid
             for (int j = 0; j < size; j++)
             {
                 Rectangle box = new Rectangle(50, 50);
-                box.setFill(BLACK);
+                box.setFill(BROWN);
                 GridPane.setConstraints(box, i, j);
                 gridBoard.getChildren().add(box);
                 boxes.add(box);
@@ -129,7 +130,7 @@ public class Grid
         col1.setPercentWidth(20);
         //for column 2
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(80);
+        col2.setPercentWidth(70);
 
         grid.getColumnConstraints().addAll(col1, col2);
         grid.getRowConstraints().addAll(row1, row2);
@@ -168,7 +169,7 @@ public class Grid
         miner.setRotate(0);
     }
 
-    public void move(int size)
+    public Point move(int size)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
@@ -190,6 +191,8 @@ public class Grid
         else System.out.println("Miner moves out of bounds!");
 
         System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
+
+        return (new Point(x, y));
     }
 
     // Allows events of listed objects to be handled
