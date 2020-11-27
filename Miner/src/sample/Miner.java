@@ -10,7 +10,7 @@ public class Miner {
 
     public Miner()
     {
-        pos = new Point(1, 1);
+        pos = new Point(0, 0);
     }
 
     public void move(Point p)

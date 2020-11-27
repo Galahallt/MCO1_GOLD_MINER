@@ -176,13 +176,8 @@ public class Menu
         for (int i = 0; i < grid.getColumnCount(); i ++)
             grid.getColumnConstraints().add(cc);
 
-
-
         Scene scene = new Scene(grid, 600, 500);
-        //remove focus from any textfield
         grid.requestFocus();
-        //grid.setGridLinesVisible(true);
-
 
         return scene;
     }
