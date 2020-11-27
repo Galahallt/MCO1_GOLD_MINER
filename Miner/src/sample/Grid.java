@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.util.ArrayList;
 import static javafx.scene.paint.Color.BROWN;
 
@@ -143,7 +144,7 @@ public class Grid
         miner.setRotate(0);
     }
 
-    public void move(int size)
+    public Point move(int size)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
@@ -165,6 +166,8 @@ public class Grid
         else System.out.println("Miner moves out of bounds!");
 
         System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
+
+        return (new Point(x, y));
     }
 
     // Allows events of listed objects to be handled
