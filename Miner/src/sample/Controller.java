@@ -27,6 +27,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
     Point gold;                 // Coordinate of gold
+    Point miner;
 
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
@@ -35,6 +36,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.window = window;
         this.grid = grid;
 
+        miner = new Point(0 ,0);
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -192,6 +194,31 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             menu.taBeacon.clear();
     }
 
+    public void up()
+    {
+        grid.up();
+    }
+
+    public void down()
+    {
+        grid.down();
+    }
+
+    public void left()
+    {
+        grid.left();
+    }
+
+    public void right()
+    {
+        grid.right();
+    }
+
+    public void move()
+    {
+        grid.move(size);
+    }
+
     // Handles events
     @Override
     public void handle(Event e)
@@ -221,19 +248,19 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 // Debug Miner Movement
                 case "Up" -> {
-                    grid.up();
+                    up();
                 }
                 case "Down" -> {
-                    grid.down();
+                    down();
                 }
                 case "Right" -> {
-                    grid.right();
+                    right();
                 }
                 case "Left" -> {
-                    grid.left();
+                    left();
                 }
                 case "Move" -> {
-                    grid.move(size);
+                    move();
                 }
             }
         }
