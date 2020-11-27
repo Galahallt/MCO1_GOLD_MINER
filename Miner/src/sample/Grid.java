@@ -23,6 +23,8 @@ public class Grid
 
     GridPane grid = new GridPane();
 
+    String name = "paolo";
+
     //Debug Miner moves
     Button btnUp = new Button("Up");
     Button btnDown = new Button("Down");
