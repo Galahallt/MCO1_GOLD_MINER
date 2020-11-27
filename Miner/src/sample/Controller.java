@@ -27,7 +27,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
     Point gold;                 // Coordinate of gold
-    Point miner;                // Coordinate of miner
 
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
@@ -36,6 +35,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.window = window;
         this.grid = grid;
 
+
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
     }
@@ -43,11 +43,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Switches from menu window to grid window
     public void switchToGrid()
     {
+
+        //grid.setEventHandlers(this);
+
         ImageView miner = grid.miner;
         smart = menu.rbIntSmart.isSelected();
 
-        System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
-        window.setScene(grid.buildGrid(size));
+        System.out.println(gold.getX() + " " + gold.getY());
+        window.setScene(grid.buildGrid(size, pits, beacons, gold));
         window.show();
     }
 
@@ -88,8 +91,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 return false;
             }
             else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
-                Point p = new Point(x, y);
-                return !pits.contains(p) && !beacons.contains(p);   // If already a pit/beacon
+                gold = new Point(x, y);
+                return !pits.contains(gold) && !beacons.contains(gold);   // If already a pit/beacon
             }
             else {
                 gold = null;
@@ -135,8 +138,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
 
     //Update View for pit
-    public void updatePitView()
-    {
+    public void updatePitView() {
         if (pits.size() > 0) {      // Prevents index out of bounds when pit is empty
             String display = "";
             for (Point pit : pits)
@@ -178,34 +180,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void up()
-    {
-        grid.up();
-    }
-
-    public void down()
-    {
-        grid.down();
-    }
-
-    public void left()
-    {
-        grid.left();
-    }
-
-    public void right()
-    {
-        grid.right();
-    }
-
-    public void move()
-    {
-        miner = grid.move(size);
-    }
-
     //Update View for beacon
-    public void updateBeaconView()
-    {
+    public void updateBeaconView() {
         if (beacons.size() > 0) {      // Prevents index out of bounds when beacon is empty
             String display = "";
             for (Point beacon : beacons)
@@ -245,19 +221,19 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 // Debug Miner Movement
                 case "Up" -> {
-                    up();
+                    grid.up();
                 }
                 case "Down" -> {
-                    down();
+                    grid.down();
                 }
                 case "Right" -> {
-                    right();
+                    grid.right();
                 }
                 case "Left" -> {
-                    left();
+                    grid.left();
                 }
                 case "Move" -> {
-                    move();
+                    grid.move(size);
                 }
             }
         }

@@ -24,6 +24,8 @@ public class Grid
 
     GridPane grid = new GridPane();
 
+    String name = "paolo";
+
     //Debug Miner moves
     Button btnUp = new Button("Up");
     Button btnDown = new Button("Down");
@@ -34,7 +36,7 @@ public class Grid
 
 
     // Scene builder
-    public Scene buildGrid(int size)
+    public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
         //Debug code
         GridPane.setConstraints(btnUp, 0, 1);
@@ -81,10 +83,35 @@ public class Grid
             }
         }
 
+        // add pits to grid
+        for (int i = 0; i < pits.size(); i++) {
+            ImageView pit = new ImageView("sample/Pit.png");
+            pit.setFitWidth(50);
+            pit.setFitHeight(50);
+            GridPane.setConstraints(pit, (int) pits.get(i).getY(), (int) pits.get(i).getX());
+            gridBoard.getChildren().add(pit);
+        }
+
+        // add beacons to grid
+        for (int i = 0; i < beacons.size(); i++)
+        {
+            ImageView beacon = new ImageView("sample/Beacon.png");
+            beacon.setFitWidth(50);
+            beacon.setFitHeight(50);
+            GridPane.setConstraints(beacon, (int) beacons.get(i).getY(), (int) beacons.get(i).getX());
+            gridBoard.getChildren().add(beacon);
+        }
+
+        // add gold to grid
+        ImageView gold = new ImageView("sample/Gold.png");
+        gold.setFitHeight(50);
+        gold.setFitWidth(50);
+        GridPane.setConstraints(gold, (int) goldPot.getY(), (int) goldPot.getX());
+        gridBoard.getChildren().add(gold);
+
+
         GridPane.setConstraints(miner, 0, 0);
         gridBoard.getChildren().add(miner);
-
-
 
 
         //Stats label
