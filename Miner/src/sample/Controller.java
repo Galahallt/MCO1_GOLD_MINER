@@ -35,7 +35,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.window = window;
         this.grid = grid;
 
-
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
     }
@@ -43,9 +42,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Switches from menu window to grid window
     public void switchToGrid()
     {
-
-        //grid.setEventHandlers(this);
-
         ImageView miner = grid.miner;
         smart = menu.rbIntSmart.isSelected();
 
