@@ -27,6 +27,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
     Point gold;                 // Coordinate of gold
+    Point miner;                // Coordinate of miner
 
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
@@ -134,7 +135,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
 
     //Update View for pit
-    public void updatePitView() {
+    public void updatePitView()
+    {
         if (pits.size() > 0) {      // Prevents index out of bounds when pit is empty
             String display = "";
             for (Point pit : pits)
@@ -176,8 +178,34 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    public void up()
+    {
+        grid.up();
+    }
+
+    public void down()
+    {
+        grid.down();
+    }
+
+    public void left()
+    {
+        grid.left();
+    }
+
+    public void right()
+    {
+        grid.right();
+    }
+
+    public void move()
+    {
+        miner = grid.move(size);
+    }
+
     //Update View for beacon
-    public void updateBeaconView() {
+    public void updateBeaconView()
+    {
         if (beacons.size() > 0) {      // Prevents index out of bounds when beacon is empty
             String display = "";
             for (Point beacon : beacons)
@@ -217,19 +245,19 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 // Debug Miner Movement
                 case "Up" -> {
-                    grid.up();
+                    up();
                 }
                 case "Down" -> {
-                    grid.down();
+                    down();
                 }
                 case "Right" -> {
-                    grid.right();
+                    right();
                 }
                 case "Left" -> {
-                    grid.left();
+                    left();
                 }
                 case "Move" -> {
-                    grid.move(size);
+                    move();
                 }
             }
         }

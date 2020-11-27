@@ -3,16 +3,19 @@ package sample;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 
+import java.awt.*;
+
 public class Miner {
-    private int x;
-    private int y;
-    private int size;
-    private int index;          // index of box where miner is
+    private Point pos;
 
     public Miner()
     {
-        this.x = 1;
-        this.y = 1;
+        pos = new Point(1, 1);
+    }
+
+    public void move(Point p)
+    {
+        pos = p;
     }
 
     public void up(Grid grid)
