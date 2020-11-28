@@ -27,7 +27,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
     Point gold;                 // Coordinate of gold
-    Point miner;
+    Point miner;                // Coordinate of miner
 
     // Constructor
     public Controller(Menu menu, Stage window, Grid grid)
