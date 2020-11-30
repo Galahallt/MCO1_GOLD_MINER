@@ -15,18 +15,16 @@ import static javafx.scene.paint.Color.BLACK;
 public class Main extends Application {
     Stage window;
     Menu menu;
-    Grid grid;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         menu = new Menu();
-        grid = new Grid();
 
         window = primaryStage;
         window.setTitle("Gold Miner");
 
         window.setScene(menu.buildMenu());
-        new Controller(menu, window, grid);
+        new Controller(menu, window);
         window.show();
     }
 

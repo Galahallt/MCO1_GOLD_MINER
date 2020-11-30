@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 
 public class Over
 {
-    public Scene builder()
+    public Scene buildOver()
     {
         GridPane grid = new GridPane();
         grid.setStyle("-fx-background-image: url('sample/Cave.jpg');-fx-background-size: cover;");
