@@ -22,6 +22,9 @@ public class Grid
     public ArrayList<Rectangle> boxes = new ArrayList<>();
     public ImageView miner = new ImageView("sample/Miner.png");
 
+    public int move;
+    public int rotation;
+
     GridPane grid = new GridPane();
 
     String name = "paolo";
@@ -33,6 +36,8 @@ public class Grid
     Button btnRight = new Button("Right");
 
     Button btnMove = new Button("Move");
+
+    Label lblStats;
 
 
     // Scene builder
@@ -115,7 +120,7 @@ public class Grid
 
 
         //Stats label
-        Label lblStats = new Label("Stats:\nMoves:\nRotations:\n");
+        lblStats = new Label("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\n");
         lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
         grid.add(lblStats, 0, 0);
 
@@ -141,32 +146,53 @@ public class Grid
         return scene;
     }
 
+    public void updateStats()
+    {
+        lblStats.setText("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\n");
+    }
+
     public void up()
     {
-        miner.setRotate(0);
-        if (miner.getScaleX() == -1)
-            miner.setRotate(90);
-        else miner.setRotate(-90);
+        if (!((miner.getScaleX() == -1 && miner.getRotate() == 90) || (miner.getScaleX() == 1 && miner.getRotate() == -90))) {
+            rotation++;
+            miner.setRotate(0);
+            if (miner.getScaleX() == -1)
+                miner.setRotate(90);
+            else miner.setRotate(-90);
+        }
+        updateStats();
     }
 
     public void down()
     {
-        miner.setRotate(0);
-        if (miner.getScaleX() == -1)
-            miner.setRotate(-90);
-        else miner.setRotate(90);
+        if (!((miner.getScaleX() == -1 && miner.getRotate() == -90) || (miner.getScaleX() == 1 && miner.getRotate() == 90))) {
+            rotation++;
+            miner.setRotate(0);
+            if (miner.getScaleX() == -1)
+                miner.setRotate(-90);
+            else miner.setRotate(90);
+        }
+        updateStats();
     }
 
     public void left()
     {
-        miner.setRotate(0);
-        miner.setScaleX(-1);
+        if (!((miner.getRotate() == 0) && miner.getScaleX() == -1)) {
+            rotation++;
+            miner.setRotate(0);
+            miner.setScaleX(-1);
+        }
+        updateStats();
     }
 
     public void right()
     {
-        miner.setScaleX(1);
-        miner.setRotate(0);
+        if (!((miner.getRotate() == 0) && miner.getScaleX() == 1)) {
+            rotation++;
+            miner.setScaleX(1);
+            miner.setRotate(0);
+        }
+        updateStats();
     }
 
     public Point move(int size)
@@ -180,23 +206,29 @@ public class Grid
         if (rotate == 0 && scale == 1 && x >= 0 && x < size - 1) {
             GridPane.setColumnIndex(miner, x + 1);
             x++;
+            move++;
         }
         // move to the left
         else if (rotate == 0 && scale == -1 && x > 0 && x <= size) {
             GridPane.setColumnIndex(miner, x - 1);
             x--;
+            move++;
         }
         // move down
         else if (((rotate == -90 && scale == -1) || (rotate == 90 && scale == 1)) && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
             y++;
+            move++;
         }
         // move up
         else if (((rotate == -90 && scale == 1) || (rotate == 90 && scale == -1)) && y > 0 && y <= size) {
             GridPane.setRowIndex(miner, y - 1);
             y--;
+            move++;
         }
         else System.out.println("Miner moves out of bounds!");
+
+        updateStats();
 
         System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
 

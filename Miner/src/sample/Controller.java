@@ -20,6 +20,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private Menu menu;          // Menu layout
     private Grid grid;          // Grid layout
     private Over over;          // Over layout
+    private Winner winner;      // Winner layout
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
@@ -37,6 +38,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.window = window;
         this.grid = new Grid();
         this.over = new Over();
+        this.winner = new Winner();
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -202,6 +204,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
+    public boolean ifWinner()
+    {
+        if (gold.getX() == miner.getX() && gold.getY() == miner.getY())
+            return true;
+        return false;
+    }
+
     public void up()
     {
         grid.up();
@@ -229,6 +238,11 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             window.setScene(over.buildOver());
             window.show();
             System.out.println("Game Over!");
+        }
+        else if (ifWinner()) {
+            window.setScene(winner.buildWinner());
+            window.show();
+            System.out.println("Winner!");
         }
     }
 
