@@ -19,6 +19,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     Stage window;               // primaryStage
     private Menu menu;          // Menu layout
     private Grid grid;          // Grid layout
+    private Over over;          // Over layout
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
@@ -30,13 +31,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     Point miner;                // Coordinate of miner
 
     // Constructor
-    public Controller(Menu menu, Stage window, Grid grid)
+    public Controller(Menu menu, Stage window)
     {
         this.menu = menu;
         this.window = window;
-        this.grid = grid;
-
-        miner = new Point(0 ,0);
+        this.grid = new Grid();
+        this.over = new Over();
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -120,9 +120,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
-                        && (p.getY() != 1 && p.getY() != 1)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
+                        && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
                 else
@@ -165,9 +165,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
-                        && (p.getY() != 1 && p.getY() != 1)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
+                        && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
                 else
@@ -194,6 +194,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             menu.taBeacon.clear();
     }
 
+    public boolean ifOver()
+    {
+        for (Point pit : pits)
+            if (pit.getX() == miner.getX() && pit.getY() == miner.getY())
+                return true;
+        return false;
+    }
+
     public void up()
     {
         grid.up();
@@ -216,7 +224,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public void move()
     {
-        grid.move(size);
+        miner = grid.move(size);
+        if (ifOver()) {
+            window.setScene(over.buildOver());
+            window.show();
+            System.out.println("Game Over!");
+        }
     }
 
     // Handles events

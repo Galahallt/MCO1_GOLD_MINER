@@ -88,7 +88,7 @@ public class Grid
             ImageView pit = new ImageView("sample/Pit.png");
             pit.setFitWidth(50);
             pit.setFitHeight(50);
-            GridPane.setConstraints(pit, (int) pits.get(i).getY(), (int) pits.get(i).getX());
+            GridPane.setConstraints(pit, (int) pits.get(i).getX(), (int) pits.get(i).getY());
             gridBoard.getChildren().add(pit);
         }
 
@@ -98,7 +98,7 @@ public class Grid
             ImageView beacon = new ImageView("sample/Beacon.png");
             beacon.setFitWidth(50);
             beacon.setFitHeight(50);
-            GridPane.setConstraints(beacon, (int) beacons.get(i).getY(), (int) beacons.get(i).getX());
+            GridPane.setConstraints(beacon, (int) beacons.get(i).getX(), (int) beacons.get(i).getY());
             gridBoard.getChildren().add(beacon);
         }
 
@@ -106,7 +106,7 @@ public class Grid
         ImageView gold = new ImageView("sample/Gold.png");
         gold.setFitHeight(50);
         gold.setFitWidth(50);
-        GridPane.setConstraints(gold, (int) goldPot.getY(), (int) goldPot.getX());
+        GridPane.setConstraints(gold, (int) goldPot.getX(), (int) goldPot.getY());
         gridBoard.getChildren().add(gold);
 
 
@@ -177,17 +177,25 @@ public class Grid
         double scale = miner.getScaleX();
 
         // move to the right
-        if (rotate == 0 && scale == 1 && x >= 0 && x < size - 1)
-            GridPane.setColumnIndex(miner, x+1);
+        if (rotate == 0 && scale == 1 && x >= 0 && x < size - 1) {
+            GridPane.setColumnIndex(miner, x + 1);
+            x++;
+        }
         // move to the left
-        else if (rotate == 0 && scale == -1 && x > 0 && x <= size)
-            GridPane.setColumnIndex(miner, x-1);
+        else if (rotate == 0 && scale == -1 && x > 0 && x <= size) {
+            GridPane.setColumnIndex(miner, x - 1);
+            x--;
+        }
         // move down
-        else if (((rotate == -90 && scale == -1) || (rotate == 90 && scale == 1)) && y >= 0 && y < size - 1)
-            GridPane.setRowIndex(miner, y+1);
+        else if (((rotate == -90 && scale == -1) || (rotate == 90 && scale == 1)) && y >= 0 && y < size - 1) {
+            GridPane.setRowIndex(miner, y + 1);
+            y++;
+        }
         // move up
-        else if (((rotate == -90 && scale == 1) || (rotate == 90 && scale == -1)) && y > 0 && y <= size)
-            GridPane.setRowIndex(miner, y-1);
+        else if (((rotate == -90 && scale == 1) || (rotate == 90 && scale == -1)) && y > 0 && y <= size) {
+            GridPane.setRowIndex(miner, y - 1);
+            y--;
+        }
         else System.out.println("Miner moves out of bounds!");
 
         System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
