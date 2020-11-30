@@ -90,7 +90,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             int x = a.nextInt();
             int y = a.nextInt();
 
-            if (x == 1 && y == 1) {     // Miner's initial position
+            if (x == 0 && y == 0) {     // Miner's initial position
                 gold = null;
                 return false;
             }
