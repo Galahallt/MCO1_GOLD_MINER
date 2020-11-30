@@ -94,7 +94,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 gold = null;
                 return false;
             }
-            else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
+            else if (x >= 0 && x < size && y >= 0 && y < size) {    // Is valid coordinate according to grid size
                 gold = new Point(x, y);
                 return !pits.contains(gold) && !beacons.contains(gold);   // If already a pit/beacon
             }
