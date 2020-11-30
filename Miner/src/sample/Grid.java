@@ -36,6 +36,7 @@ public class Grid
     Button btnRight = new Button("Right");
 
     Button btnMove = new Button("Move");
+    Button btnAuto = new Button("Auto");
 
     Label lblStats;
 
@@ -46,6 +47,9 @@ public class Grid
         //Debug code
         GridPane.setConstraints(btnUp, 0, 1);
         GridPane.setHalignment(btnUp, HPos.CENTER);
+
+        GridPane.setConstraints(btnAuto, 0, 1);
+        GridPane.setHalignment(btnAuto, HPos.RIGHT);
 
         GridPane.setConstraints(btnDown, 0, 2);
         GridPane.setHalignment(btnDown, HPos.CENTER);
@@ -58,7 +62,7 @@ public class Grid
 
         GridPane.setConstraints(btnMove, 1, 1);
         GridPane.setHalignment(btnMove, HPos.CENTER);
-        grid.getChildren().addAll(btnUp, btnDown, btnLeft, btnRight, btnMove);
+        grid.getChildren().addAll(btnUp, btnDown, btnLeft, btnRight, btnMove, btnAuto);
 
         GridPane gridBoard = new GridPane();
         ScrollPane scroll = new ScrollPane(gridBoard);
@@ -244,5 +248,6 @@ public class Grid
         btnRight.setOnAction((EventHandler) cont);
 
         btnMove.setOnAction((EventHandler) cont);
+        btnAuto.setOnAction((EventHandler) cont);
     }
 }

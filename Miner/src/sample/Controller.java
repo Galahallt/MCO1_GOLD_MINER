@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
@@ -10,9 +11,11 @@ import javafx.scene.image.*; // Image, ImageView
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
@@ -24,6 +27,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
+
+    private int orientation;    // 1right, 2down, 3left, 4up
+
+    PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -39,6 +46,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.grid = new Grid();
         this.over = new Over();
         this.winner = new Winner();
+
+        miner = new Point(0 ,0);
+        orientation = 1;
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -96,7 +106,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             }
             else if (x >= 0 && x < size && y >= 0 && y < size) {    // Is valid coordinate according to grid size
                 gold = new Point(x, y);
-                return !pits.contains(gold) && !beacons.contains(gold);   // If already a pit/beacon
+                return !(pits.contains(gold) || beacons.contains(gold));   // If already a pit/beacon
             }
             else {
                 gold = null;
@@ -214,21 +224,25 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void up()
     {
         grid.up();
+        orientation = 1;
     }
 
     public void down()
     {
         grid.down();
+        orientation = 2;
     }
 
     public void left()
     {
         grid.left();
+        orientation = 3;
     }
 
     public void right()
     {
         grid.right();
+        orientation = 4;
     }
 
     public void move()
@@ -246,18 +260,38 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    public void auto(){
+        while (miner.getX() > gold.getX()) {
+            left();
+            move();
+        }
+        while (miner.getX() < gold.getX()) {
+            right();
+            move();
+        }
+        while (miner.getY() > gold.getY()) {
+            up();
+            move();
+        }
+        while (miner.getY() < gold.getY()) {
+            down();
+            move();
+        }
+    }
+
     // Handles events
     @Override
     public void handle(Event e)
     {
         if (e.getSource() instanceof Button)    // If a button is pushed
+        {
             handle((ActionEvent) e);
+        }
         else
             System.out.println("Event");
     }
 
-    public void handle(ActionEvent e)
-    {
+    public void handle(ActionEvent e){
         String strButton;
 
         if (e.getSource() instanceof Button) {
@@ -288,6 +322,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 case "Move" -> {
                     move();
+                }
+                case "Auto" -> {
+                    auto();
                 }
             }
         }
