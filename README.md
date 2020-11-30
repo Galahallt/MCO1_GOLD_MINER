@@ -6,6 +6,12 @@ PEREZ, James Andrew F.
 
 Updates:
 
+[11/30/2020]
+  - [Miner] Added some gitignore files to (hopefully) ignore Project Structure and VM Option changes
+  - [Miner/src/sample] Added 
+  - [Controller.java] Added win/lose condition when hitting miner hits a pit or gold
+  - 
+
 [11/25/2020]
   - [Controller.java] Added checkers to compare pits, beacons, and gold coordinates
   - [Controller.java] Added a Point attribute called "gold"
