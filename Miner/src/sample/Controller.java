@@ -227,7 +227,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         orientation = 1;
     }
 
-
     public void move()
     {
         miner = grid.move(size);
@@ -243,27 +242,27 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    /*
+
     public void auto(){
-        while (miner.getX() > gold.getX()) {
-            left();
+        while (miner.getY() < gold.getY()) {    // Down
+            rotate();
             move();
         }
-        while (miner.getX() < gold.getX()) {
-            right();
+        while (miner.getX() > gold.getX()) {    // Left
+            rotate();
             move();
         }
-        while (miner.getY() > gold.getY()) {
-            up();
+        while (miner.getY() > gold.getY()) {    // Up
+            rotate();
             move();
         }
-        while (miner.getY() < gold.getY()) {
-            down();
+        while (miner.getX() < gold.getX()) {    // Right
+            rotate();
             move();
         }
     }
 
-     */
+
 
     // Handles events
     @Override
@@ -311,13 +310,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Move" -> {
                     move();
                 }
-
-                /*
                 case "Auto" -> {
                     auto();
                 }
-
-                 */
             }
         }
     }
