@@ -1,36 +1,24 @@
 package sample;
 
-import javafx.animation.PauseTransition;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.input.*; // Mouse event
-import javafx.scene.image.*; // Image, ImageView
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
     Stage window;               // primaryStage
-    private Menu menu;          // Menu layout
-    private Grid grid;          // Grid layout
-    private Over over;          // Over layout
-    private Winner winner;      // Winner layout
+    private final Menu menu;          // Menu layout
+    private final Grid grid;          // Grid layout
+    private final Over over;          // Over layout
+    private final Winner winner;      // Winner layout
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
-
-    private int orientation;    // 1right, 2down, 3left, 4up
-
-    PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -48,7 +36,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.winner = new Winner();
 
         miner = new Point(0 ,0);
-        orientation = 1;
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -57,10 +44,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Switches from menu window to grid window
     public void switchToGrid()
     {
-
-        //grid.setEventHandlers(this);
-
-        ImageView miner = grid.miner;
         smart = menu.rbIntSmart.isSelected();
 
         System.out.println(gold.getX() + " " + gold.getY());
@@ -216,15 +199,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public boolean ifWinner()
     {
-        if (gold.getX() == miner.getX() && gold.getY() == miner.getY())
-            return true;
-        return false;
+        return gold.getX() == miner.getX() && gold.getY() == miner.getY();
     }
 
     public void rotate()
     {
         grid.rotate();
-        orientation = 1;
     }
 
     public void move()
@@ -293,26 +273,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     updateBeaconView();
                 }
                 // Debug Miner Movement
-                case "Rotate" -> {
+                case "Rotate" ->
                     rotate();
-                }
-                /*
-                case "Down" -> {
-                    down();
-                }
-                case "Right" -> {
-                    right();
-                }
-                case "Left" -> {
-                    left();
-                }
-                */
-                case "Move" -> {
+                case "Move" ->
                     move();
-                }
-                case "Auto" -> {
+                case "Auto" ->
                     auto();
-                }
             }
         }
     }
