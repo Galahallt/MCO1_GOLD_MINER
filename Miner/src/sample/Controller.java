@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
@@ -10,18 +11,26 @@ import javafx.scene.image.*; // Image, ImageView
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
     Stage window;               // primaryStage
     private Menu menu;          // Menu layout
     private Grid grid;          // Grid layout
+    private Over over;          // Over layout
+    private Winner winner;      // Winner layout
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
+
+    private int orientation;    // 1right, 2down, 3left, 4up
+
+    PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -30,13 +39,16 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     Point miner;                // Coordinate of miner
 
     // Constructor
-    public Controller(Menu menu, Stage window, Grid grid)
+    public Controller(Menu menu, Stage window)
     {
         this.menu = menu;
         this.window = window;
-        this.grid = grid;
+        this.grid = new Grid();
+        this.over = new Over();
+        this.winner = new Winner();
 
         miner = new Point(0 ,0);
+        orientation = 1;
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -88,13 +100,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             int x = a.nextInt();
             int y = a.nextInt();
 
-            if (x == 1 && y == 1) {     // Miner's initial position
+            if (x == 0 && y == 0) {     // Miner's initial position
                 gold = null;
                 return false;
             }
-            else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
+            else if (x >= 0 && x < size && y >= 0 && y < size) {    // Is valid coordinate according to grid size
                 gold = new Point(x, y);
-                return !pits.contains(gold) && !beacons.contains(gold);   // If already a pit/beacon
+                return !(pits.contains(gold) || beacons.contains(gold));   // If already a pit/beacon
             }
             else {
                 gold = null;
@@ -120,9 +132,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
-                        && (p.getY() != 1 && p.getY() != 1)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
+                        && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
                 else
@@ -165,9 +177,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
-                        && (p.getY() != 1 && p.getY() != 1)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
+                        && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
                 else
@@ -194,29 +206,77 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             menu.taBeacon.clear();
     }
 
+    public boolean ifOver()
+    {
+        for (Point pit : pits)
+            if (pit.getX() == miner.getX() && pit.getY() == miner.getY())
+                return true;
+        return false;
+    }
+
+    public boolean ifWinner()
+    {
+        if (gold.getX() == miner.getX() && gold.getY() == miner.getY())
+            return true;
+        return false;
+    }
+
     public void up()
     {
         grid.up();
+        orientation = 1;
     }
 
     public void down()
     {
         grid.down();
+        orientation = 2;
     }
 
     public void left()
     {
         grid.left();
+        orientation = 3;
     }
 
     public void right()
     {
         grid.right();
+        orientation = 4;
     }
 
     public void move()
     {
-        grid.move(size);
+        miner = grid.move(size);
+        if (ifOver()) {
+            window.setScene(over.buildOver());
+            window.show();
+            System.out.println("Game Over!");
+        }
+        else if (ifWinner()) {
+            window.setScene(winner.buildWinner());
+            window.show();
+            System.out.println("Winner!");
+        }
+    }
+
+    public void auto(){
+        while (miner.getX() > gold.getX()) {
+            left();
+            move();
+        }
+        while (miner.getX() < gold.getX()) {
+            right();
+            move();
+        }
+        while (miner.getY() > gold.getY()) {
+            up();
+            move();
+        }
+        while (miner.getY() < gold.getY()) {
+            down();
+            move();
+        }
     }
 
     // Handles events
@@ -224,13 +284,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void handle(Event e)
     {
         if (e.getSource() instanceof Button)    // If a button is pushed
+        {
             handle((ActionEvent) e);
+        }
         else
             System.out.println("Event");
     }
 
-    public void handle(ActionEvent e)
-    {
+    public void handle(ActionEvent e){
         String strButton;
 
         if (e.getSource() instanceof Button) {
@@ -261,6 +322,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 case "Move" -> {
                     move();
+                }
+                case "Auto" -> {
+                    auto();
                 }
             }
         }

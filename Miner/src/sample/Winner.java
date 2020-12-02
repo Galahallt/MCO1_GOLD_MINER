@@ -4,9 +4,9 @@ import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.layout.GridPane;
 
-public class Over
+public class Winner
 {
-    public Scene buildOver()
+    public Scene buildWinner()
     {
         GridPane grid = new GridPane();
         grid.setStyle("-fx-background-image: url('sample/Cave.jpg');-fx-background-size: cover;");

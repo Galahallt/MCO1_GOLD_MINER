@@ -6,6 +6,14 @@ PEREZ, James Andrew F.
 
 Updates:
 
+[11/30/2020]
+  - [Miner] Added some gitignore files to (hopefully) ignore Project Structure and VM Option changes
+  - [Miner/src/sample] Added Over.java and Winner.java
+  - [Controller.java] Added win/lose condition when hitting miner hits a pit or gold
+  - [Controller.java] Added Auto button for AI debugging
+  - [Controller.java] Fixed add pit, add beacon, and add gold functions
+  - [Grid.java] Added stat updates for every move and rotation
+
 [11/25/2020]
   - [Controller.java] Added checkers to compare pits, beacons, and gold coordinates
   - [Controller.java] Added a Point attribute called "gold"
