@@ -162,7 +162,7 @@ public class Grid
         rotation++;
         updateStats();
     }
-
+    /*
     public void down()
     {
         if (!((miner.getScaleX() == -1 && miner.getRotate() == -90) || (miner.getScaleX() == 1 && miner.getRotate() == 90))) {
@@ -193,7 +193,7 @@ public class Grid
             miner.setRotate(0);
         }
         updateStats();
-    }
+    }*/
 
     public Point move(int size)
     {
