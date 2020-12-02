@@ -297,17 +297,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Rotate" -> {
                     rotate();
                 }
-                /*
-                case "Down" -> {
-                    down();
-                }
-                case "Right" -> {
-                    right();
-                }
-                case "Left" -> {
-                    left();
-                }
-                */
                 case "Move" -> {
                     move();
                 }

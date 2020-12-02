@@ -27,8 +27,6 @@ public class Grid
 
     GridPane grid = new GridPane();
 
-    String name = "paolo";
-
     //Debug Miner moves
     Button btnRotate = new Button("Rotate");
     Button btnMove = new Button("Move");
@@ -40,12 +38,6 @@ public class Grid
     // Scene builder
     public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
-        /*
-               |     |
-             1 |     |
-               |     |
-               |     |
-         */
         //Debug code
         GridPane.setConstraints(btnRotate, 0, 1);
         GridPane.setHalignment(btnRotate, HPos.CENTER);
@@ -86,21 +78,20 @@ public class Grid
         }
 
         // add pits to grid
-        for (int i = 0; i < pits.size(); i++) {
+        for (Point point : pits) {
             ImageView pit = new ImageView("sample/Pit.png");
             pit.setFitWidth(50);
             pit.setFitHeight(50);
-            GridPane.setConstraints(pit, (int) pits.get(i).getX(), (int) pits.get(i).getY());
+            GridPane.setConstraints(pit, (int) point.getX(), (int) point.getY());
             gridBoard.getChildren().add(pit);
         }
 
         // add beacons to grid
-        for (int i = 0; i < beacons.size(); i++)
-        {
+        for (Point point : beacons) {
             ImageView beacon = new ImageView("sample/Beacon.png");
             beacon.setFitWidth(50);
             beacon.setFitHeight(50);
-            GridPane.setConstraints(beacon, (int) beacons.get(i).getX(), (int) beacons.get(i).getY());
+            GridPane.setConstraints(beacon, (int) point.getX(), (int) point.getY());
             gridBoard.getChildren().add(beacon);
         }
 
@@ -163,37 +154,6 @@ public class Grid
         updateStats();
     }
 
-    public void down()
-    {
-        if (!((miner.getScaleX() == -1 && miner.getRotate() == -90) || (miner.getScaleX() == 1 && miner.getRotate() == 90))) {
-            rotation++;
-            miner.setRotate(0);
-            if (miner.getScaleX() == -1)
-                miner.setRotate(-90);
-            else miner.setRotate(90);
-        }
-        updateStats();
-    }
-
-    public void left()
-    {
-        if (!((miner.getRotate() == 0) && miner.getScaleX() == -1)) {
-            rotation++;
-            miner.setRotate(0);
-            miner.setScaleX(-1);
-        }
-        updateStats();
-    }
-
-    public void right()
-    {
-        if (!((miner.getRotate() == 0) && miner.getScaleX() == 1)) {
-            rotation++;
-            miner.setScaleX(1);
-            miner.setRotate(0);
-        }
-        updateStats();
-    }
 
     public Point move(int size)
     {
