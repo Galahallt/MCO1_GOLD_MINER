@@ -35,7 +35,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.over = new Over();
         this.winner = new Winner();
 
-        miner = new Point(0 ,0);
+        miner = new Point(1 ,1);
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -83,12 +83,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             int x = a.nextInt();
             int y = a.nextInt();
 
-            if (x == 0 && y == 0) {     // Miner's initial position
+            if (x == 1 && y == 1) {     // Miner's initial position
                 gold = null;
                 return false;
             }
-            else if (x >= 0 && x < size && y >= 0 && y < size) {    // Is valid coordinate according to grid size
-                gold = new Point(x, y);
+            else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
+                gold = new Point(x - 1, y - 1);
                 return !(pits.contains(gold) || beacons.contains(gold));   // If already a pit/beacon
             }
             else {
@@ -108,15 +108,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             String input = menu.tfPit.getText();
             Scanner a = new Scanner(input);
 
-            int x = a.nextInt();
-            int y = a.nextInt();
+            int x = a.nextInt() - 1;
+            int y = a.nextInt() - 1;
 
             Point p = new Point(x, y);
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() >= 0 && p.getX() < size)
-                        && (p.getY() >= 0 && p.getY() < size)
+                        && (p.getX() > 0 && p.getX() <= size)
+                        && (p.getY() > 0 && p.getY() <= size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
@@ -133,13 +133,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-
     //Update View for pit
     public void updatePitView() {
         if (pits.size() > 0) {      // Prevents index out of bounds when pit is empty
             String display = "";
             for (Point pit : pits)
-                display += "(" + (int) pit.getX() + ", " + (int) pit.getY() + ")\n";
+                display += "(" + ((int) pit.getX() + 1) + ", " + ((int) pit.getY() + 1) + ")\n";
             menu.taPit.setText(display);
         }
         else
@@ -153,15 +152,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             String input = menu.tfBeacon.getText();
             Scanner a = new Scanner(input);
 
-            int x = a.nextInt();
-            int y = a.nextInt();
+            int x = a.nextInt() - 1;
+            int y = a.nextInt() - 1;
 
             Point p = new Point(x, y);
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() >= 0 && p.getX() < size)
-                        && (p.getY() >= 0 && p.getY() < size)
+                        && (p.getX() > 0 && p.getX() <= size)
+                        && (p.getY() > 0 && p.getY() <= size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
@@ -182,7 +181,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (beacons.size() > 0) {      // Prevents index out of bounds when beacon is empty
             String display = "";
             for (Point beacon : beacons)
-                display += "(" + (int) beacon.getX() + ", " + (int) beacon.getY() + ")\n";
+                display += "(" + ((int) beacon.getX() + 1) + ", " + ((int) beacon.getY() + 1) + ")\n";
             menu.taBeacon.setText(display);
         }
         else
@@ -222,7 +221,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-
     public void auto(){
         while (miner.getY() < gold.getY()) {    // Down
             rotate();
@@ -241,8 +239,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move();
         }
     }
-
-
 
     // Handles events
     @Override
