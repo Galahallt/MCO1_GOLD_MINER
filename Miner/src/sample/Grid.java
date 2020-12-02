@@ -30,11 +30,7 @@ public class Grid
     String name = "paolo";
 
     //Debug Miner moves
-    Button btnUp = new Button("Up");
-    Button btnDown = new Button("Down");
-    Button btnLeft = new Button("Left");
-    Button btnRight = new Button("Right");
-
+    Button btnRotate = new Button("Rotate");
     Button btnMove = new Button("Move");
     Button btnAuto = new Button("Auto");
 
@@ -44,25 +40,22 @@ public class Grid
     // Scene builder
     public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
+        /*
+               |     |
+             1 |     |
+               |     |
+               |     |
+         */
         //Debug code
-        GridPane.setConstraints(btnUp, 0, 1);
-        GridPane.setHalignment(btnUp, HPos.CENTER);
+        GridPane.setConstraints(btnRotate, 0, 1);
+        GridPane.setHalignment(btnRotate, HPos.CENTER);
 
         GridPane.setConstraints(btnAuto, 0, 1);
         GridPane.setHalignment(btnAuto, HPos.RIGHT);
 
-        GridPane.setConstraints(btnDown, 0, 2);
-        GridPane.setHalignment(btnDown, HPos.CENTER);
-
-        GridPane.setConstraints(btnLeft, 0, 2);
-        GridPane.setHalignment(btnLeft, HPos.LEFT);
-
-        GridPane.setConstraints(btnRight, 0, 2);
-        GridPane.setHalignment(btnRight, HPos.RIGHT);
-
         GridPane.setConstraints(btnMove, 1, 1);
         GridPane.setHalignment(btnMove, HPos.CENTER);
-        grid.getChildren().addAll(btnUp, btnDown, btnLeft, btnRight, btnMove, btnAuto);
+        grid.getChildren().addAll(btnRotate, btnMove, btnAuto);
 
         GridPane gridBoard = new GridPane();
         ScrollPane scroll = new ScrollPane(gridBoard);
@@ -155,15 +148,18 @@ public class Grid
         lblStats.setText("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\n");
     }
 
-    public void up()
+    public void rotate()
     {
-        if (!((miner.getScaleX() == -1 && miner.getRotate() == 90) || (miner.getScaleX() == 1 && miner.getRotate() == -90))) {
-            rotation++;
-            miner.setRotate(0);
-            if (miner.getScaleX() == -1)
-                miner.setRotate(90);
-            else miner.setRotate(-90);
-        }
+        // if scaleX == -1 -> left
+
+
+        miner.setRotate((miner.getRotate() + 90) % 360);
+
+        if (miner.getRotate() == 180)
+            miner.setScaleY(-1);
+        else if (miner.getRotate() == 0)
+            miner.setScaleY(1);
+        rotation++;
         updateStats();
     }
 
@@ -207,25 +203,25 @@ public class Grid
         double scale = miner.getScaleX();
 
         // move to the right
-        if (rotate == 0 && scale == 1 && x >= 0 && x < size - 1) {
+        if (miner.getRotate() == 0 && x >= 0 && x < size - 1) {
             GridPane.setColumnIndex(miner, x + 1);
             x++;
             move++;
         }
         // move to the left
-        else if (rotate == 0 && scale == -1 && x > 0 && x <= size) {
+        else if (miner.getRotate() == 180 && x > 0 && x <= size) {
             GridPane.setColumnIndex(miner, x - 1);
             x--;
             move++;
         }
         // move down
-        else if (((rotate == -90 && scale == -1) || (rotate == 90 && scale == 1)) && y >= 0 && y < size - 1) {
+        else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
             y++;
             move++;
         }
         // move up
-        else if (((rotate == -90 && scale == 1) || (rotate == 90 && scale == -1)) && y > 0 && y <= size) {
+        else if (miner.getRotate() == 270 && y > 0 && y <= size) {
             GridPane.setRowIndex(miner, y - 1);
             y--;
             move++;
@@ -242,10 +238,7 @@ public class Grid
     // Allows events of listed objects to be handled
     public void setEventHandlers(Controller cont)
     {
-        btnUp.setOnAction((EventHandler) cont);
-        btnDown.setOnAction((EventHandler) cont);
-        btnLeft.setOnAction((EventHandler) cont);
-        btnRight.setOnAction((EventHandler) cont);
+        btnRotate.setOnAction((EventHandler) cont);
 
         btnMove.setOnAction((EventHandler) cont);
         btnAuto.setOnAction((EventHandler) cont);

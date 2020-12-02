@@ -221,29 +221,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
-    public void up()
+    public void rotate()
     {
-        grid.up();
+        grid.rotate();
         orientation = 1;
     }
 
-    public void down()
-    {
-        grid.down();
-        orientation = 2;
-    }
-
-    public void left()
-    {
-        grid.left();
-        orientation = 3;
-    }
-
-    public void right()
-    {
-        grid.right();
-        orientation = 4;
-    }
 
     public void move()
     {
@@ -260,6 +243,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    /*
     public void auto(){
         while (miner.getX() > gold.getX()) {
             left();
@@ -278,6 +262,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move();
         }
     }
+
+     */
 
     // Handles events
     @Override
@@ -308,9 +294,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     updateBeaconView();
                 }
                 // Debug Miner Movement
-                case "Up" -> {
-                    up();
+                case "Rotate" -> {
+                    rotate();
                 }
+                /*
                 case "Down" -> {
                     down();
                 }
@@ -320,12 +307,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Left" -> {
                     left();
                 }
+                */
                 case "Move" -> {
                     move();
                 }
+
+                /*
                 case "Auto" -> {
                     auto();
                 }
+
+                 */
             }
         }
     }
