@@ -1,6 +1,9 @@
 package sample;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
@@ -264,6 +267,19 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
      */
+    public void animateMiner()
+    {
+        Timeline move = new Timeline(
+                new KeyFrame(
+                        Duration.millis(400), event -> grid.move(size)
+                )
+        );
+
+        move.setCycleCount(1);
+        move.setAutoReverse(false);
+        move.setOnFinished(e -> Platform.runLater(() -> grid.miner.getX()));
+        move.play();
+    }
 
     // Handles events
     @Override
@@ -298,7 +314,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     rotate();
                 }
                 case "Move" -> {
-                    move();
+
+                    animateMiner();
+
+
                 }
 
                 /*
