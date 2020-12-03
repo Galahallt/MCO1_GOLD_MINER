@@ -121,7 +121,7 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\nScans: " + scan + "\n");
+        lblStats = new Label("Stats:\nMoves:\t\t" + move + "\nRotations:\t" + rotation + "\nScans:\t\t" + scan + "\n");
         lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
         grid.add(lblStats, 0, 0);
 
@@ -149,7 +149,7 @@ public class Grid
 
     public void updateStats()
     {
-        lblStats.setText("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\nScans: " + scan + "\n");
+        lblStats.setText("Stats:\nMoves:\t\t" + move + "\nRotations:\t" + rotation + "\nScans:\t\t" + scan + "\n");
     }
 
     public void rotate()

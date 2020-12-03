@@ -34,6 +34,9 @@ public class Menu
 
     public Button btnStart;
 
+    public Button btnSize;
+    public Button btnGold;
+
     // Scene builder
     public Scene buildMenu()
     {
@@ -65,7 +68,7 @@ public class Menu
         rbIntRand.setSelected(true);
         rbIntSmart.setToggleGroup(tgInt);
 
-        // Grid label
+        //Grid label
         Label lblGrid = new Label("Grid Size:");
         lblGrid.setStyle("-fx-text-fill: white;");
         GridPane.setConstraints(lblGrid, 0, 1);
@@ -76,93 +79,103 @@ public class Menu
         GridPane.setConstraints(tfGrid, 1, 1);
         tfGrid.setPromptText("pick a number from 8-64");
 
+        // Set Grid button
+        btnSize = new Button("Set Size");
+        GridPane.setConstraints(btnSize, 2, 1);
+
         //Pits label
         Label lblPit = new Label("Pits");
         lblPit.setStyle("-fx-text-fill: white;");
-        GridPane.setConstraints(lblPit, 0, 2);
+        GridPane.setConstraints(lblPit, 0, 3);
         GridPane.setHalignment(lblPit, HPos.CENTER);
 
         //Pits input
         tfPit = new TextField();
-        GridPane.setConstraints(tfPit, 0, 3);
+        GridPane.setConstraints(tfPit, 0, 4);
         tfPit.setPrefSize(25, 25);
+        tfPit.setDisable(true);
 
         //Pit Add Coordinate Button
         btnPitAdd = new Button("Add Pit");
-        GridPane.setConstraints(btnPitAdd, 0, 4);
-
+        GridPane.setConstraints(btnPitAdd, 0, 5);
 
         //Pit Remove Coordinate Button
         btnPitRem = new Button ("Remove Pit");
-        GridPane.setConstraints(btnPitRem, 0, 4);
+        GridPane.setConstraints(btnPitRem, 0, 5);
         GridPane.setHalignment(btnPitRem, HPos.RIGHT);
 
         //Pit Coordinates Label
         Label lblPitXY = new Label("Pit Coordinates:");
         lblPitXY.setStyle("-fx-text-fill: white;");
-        GridPane.setConstraints(lblPitXY, 0, 5);
+        GridPane.setConstraints(lblPitXY, 0, 6);
         lblPitXY.setDisable(true);
 
         //Pit Text Area Coordinates
         taPit = new TextArea();
         taPit.setDisable(true);
         taPit.setStyle("-fx-opacity: 1;");
-        GridPane.setConstraints(taPit, 0, 6);
+        GridPane.setConstraints(taPit, 0, 7);
 
         //Beacon label
         Label lblBeacon = new Label("Beacon");
         lblBeacon.setStyle("-fx-text-fill: white;");
-        GridPane.setConstraints(lblBeacon, 1, 2);
+        GridPane.setConstraints(lblBeacon, 1, 3);
         GridPane.setHalignment(lblBeacon, HPos.CENTER);
 
         //Beacon input
         tfBeacon = new TextField();
-        GridPane.setConstraints(tfBeacon, 1, 3);
+        GridPane.setConstraints(tfBeacon, 1, 4);
         tfBeacon.setPrefSize(25, 25);
+        tfBeacon.setDisable(true);
 
         //Beacon Add Coordinate Button
         btnBeaconAdd = new Button("Add Beacon");
-        GridPane.setConstraints(btnBeaconAdd, 1, 4);
+        GridPane.setConstraints(btnBeaconAdd, 1, 5);
 
         //Beacon Remove Coordinate Button
         btnBeaconRem = new Button ("Remove Beacon");
-        GridPane.setConstraints(btnBeaconRem, 1, 4);
+        GridPane.setConstraints(btnBeaconRem, 1, 5);
         GridPane.setHalignment(btnBeaconRem, HPos.RIGHT);
 
         //Beacon Coordinates Label
         Label lblBeaconXY = new Label("Beacon Coordinates:");
         lblBeaconXY.setStyle("-fx-text-fill: white;");
-        GridPane.setConstraints(lblBeaconXY, 1, 5);
+        GridPane.setConstraints(lblBeaconXY, 1, 6);
         lblBeaconXY.setDisable(true);
 
         //Beacon Text Area Coordinates
         taBeacon = new TextArea();
         taBeacon.setDisable(true);
         taBeacon.setStyle("-fx-opacity: 1;");
-        GridPane.setConstraints(taBeacon, 1, 6);
+        GridPane.setConstraints(taBeacon, 1, 7);
 
         //Gold Tile label
         Label lblGold = new Label("Gold Tile");
         lblGold.setStyle("-fx-text-fill: white;");
-        GridPane.setConstraints(lblGold, 2, 2);
+        GridPane.setConstraints(lblGold, 0, 2);
         GridPane.setHalignment(lblGold, HPos.CENTER);
 
         //Gold Tile input
         tfGold = new TextField();
         tfGold.setPrefSize(25, 25);
-        GridPane.setConstraints(tfGold, 2, 3);
+        GridPane.setConstraints(tfGold, 1, 2);
+        tfGold.setDisable(true);
 
+        //Set Gold button
+        btnGold = new Button("Set Gold");
+        GridPane.setConstraints(btnGold, 2, 2);
+        btnGold.setDisable(true);
 
         //Start Button
         btnStart = new Button("START!");
-        GridPane.setConstraints(btnStart, 2, 6);
+        GridPane.setConstraints(btnStart, 2, 7);
         btnStart.setPrefSize(150, 75);
         btnStart.setDisable(true);
         GridPane.setHalignment(btnStart, HPos.CENTER);
 
-        grid.getChildren().addAll(lblGrid, tfGrid, lblInt, rbIntRand,
+        grid.getChildren().addAll(lblGrid, tfGrid, btnSize, lblInt, rbIntRand,
                 rbIntSmart, lblPit, tfPit, lblBeacon, tfBeacon,
-                lblGold, tfGold, btnStart, btnPitAdd, btnBeaconAdd,
+                lblGold, tfGold, btnGold, btnStart, btnPitAdd, btnBeaconAdd,
                 btnPitRem, btnBeaconRem, taBeacon, taPit, lblPitXY,
                 lblBeaconXY);
 
@@ -188,6 +201,9 @@ public class Menu
 
         btnBeaconAdd.setOnAction((EventHandler) cont);
         btnBeaconRem.setOnAction((EventHandler) cont);
+
+        btnSize.setOnAction((EventHandler) cont);
+        btnGold.setOnAction((EventHandler) cont);
 
         tfGrid.textProperty().addListener(cont);
         tfGold.textProperty().addListener(cont);
