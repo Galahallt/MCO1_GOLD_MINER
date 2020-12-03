@@ -97,7 +97,7 @@ public class Grid
             ImageView pit = new ImageView("sample/Pit.png");
             pit.setFitWidth(50);
             pit.setFitHeight(50);
-            gridBoard.add(pit, (int) point.getX(), (int) point.getY());
+            gridBoard.add(pit, (int) point.getY(), (int) point.getX());
 
         }
 
@@ -106,7 +106,7 @@ public class Grid
             ImageView beacon = new ImageView("sample/Beacon.png");
             beacon.setFitWidth(50);
             beacon.setFitHeight(50);
-            gridBoard.add(beacon, (int) point.getX(), (int) point.getY());
+            gridBoard.add(beacon, (int) point.getY(), (int) point.getX());
         }
 
         // add gold to grid
@@ -114,7 +114,7 @@ public class Grid
         gold.setFitHeight(50);
         gold.setFitWidth(50);
         //GridPane.setConstraints(gold, (int) goldPot.getX(), (int) goldPot.getY());
-        gridBoard.add(gold, (int) goldPot.getX(), (int) goldPot.getY());
+        gridBoard.add(gold, (int) goldPot.getY(), (int) goldPot.getX());
 
         gridBoard.add(miner, 0, 0);
 
@@ -173,25 +173,25 @@ public class Grid
         // move to the right
         if (miner.getRotate() == 0 && x >= 0 && x < size - 1) {
             GridPane.setColumnIndex(miner, x + 1);
-            x++;
+            //y++;
             move++;
         }
         // move to the left
         else if (miner.getRotate() == 180 && x > 0 && x <= size) {
             GridPane.setColumnIndex(miner, x - 1);
-            x--;
+            //y--;
             move++;
         }
         // move down
         else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
-            y++;
+            //x++;
             move++;
         }
         // move up
         else if (miner.getRotate() == 270 && y > 0 && y <= size) {
             GridPane.setRowIndex(miner, y - 1);
-            y--;
+            //x--;
             move++;
         }
         else System.out.println("Miner moves out of bounds!");
@@ -208,10 +208,13 @@ public class Grid
         int orientation = (int) miner.getRotate();
         Point p;
 
+        int x = GridPane.getRowIndex(miner);
+        int y = GridPane.getColumnIndex(miner);
+
         switch (orientation) {
             case 0 -> {     // Looking Right
-                for (int i = (int) miner.getX(); i < size; i++) {
-                    p = new Point(i, (int) miner.getY());
+                for (int i = y; i < size; i++) {
+                    p = new Point(x, i);
                     if (pits.contains(p))
                         return 1;
                     else if (beacons.contains(p))
@@ -222,8 +225,8 @@ public class Grid
                 return 0;
             }
             case 90 -> {    // Looking Down
-                for (int i = (int) miner.getY(); i < size; i++) {
-                    p = new Point((int) miner.getX(), i);
+                for (int i = x; i < size; i++) {
+                    p = new Point(i, y);
                     if (pits.contains(p))
                         return 1;
                     else if (beacons.contains(p))
@@ -234,8 +237,8 @@ public class Grid
                 return 0;
             }
             case 180 -> {    // Looking Left
-                for (int i = (int) miner.getX(); i >= 0; i--) {
-                    p = new Point(i, (int) miner.getY());
+                for (int i = y; i >= 0; i--) {
+                    p = new Point(x, i);
                     if (pits.contains(p))
                         return 1;
                     else if (beacons.contains(p))
@@ -246,8 +249,8 @@ public class Grid
                 return 0;
             }
             case 270 -> {    // Looking Up
-                for (int i = (int) miner.getY(); i >= 0; i--) {
-                    p = new Point((int) miner.getX(), i);
+                for (int i = x; i >= 0; i--) {
+                    p = new Point(i, y);
                     if (pits.contains(p))
                         return 1;
                     else if (beacons.contains(p))
