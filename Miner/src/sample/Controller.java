@@ -227,6 +227,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    public void scan()
+    {
+        switch (grid.scan()) {
+            case 0 -> System.out.println("Empty");
+            case 1 -> System.out.println("Pit");
+            case 2 -> System.out.println("Beacon");
+            case 3 -> System.out.println("Gold");
+        }
+    }
+
+    // Random Intelligence Level
     public void randLvl()
     {
         Random rand = new Random();
@@ -238,23 +249,32 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move.stop();
     }
 
+    // Smart Intelligence Level
+    public void smartLvl()
+    {
+
+    }
+
+    public void animate()
+    {
+        if (random)
+            randLvl();
+        else
+            smartLvl();
+    }
+
     public void execute()
     {
-        if (random) {
-            move = new Timeline(
-                    new KeyFrame(
-                            Duration.millis(400), event -> randLvl()
-                    )
-            );
+        move = new Timeline(
+                new KeyFrame(
+                        Duration.millis(400), event -> animate()
+                )
+        );
 
-            move.setCycleCount(Animation.INDEFINITE);
-            move.play();
-            if (ifOver() || ifWinner())
-                move.stop();
-        }
-        else {
-            System.out.println("Smart intelligence level not yet coded!");
-        }
+        move.setCycleCount(Animation.INDEFINITE);
+        move.play();
+        if (ifOver() || ifWinner())
+            move.stop();
     }
 
     // Handles events
@@ -289,7 +309,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Rotate" -> rotate();
                 case "Move" -> move();
                 case "Execute" -> execute();
-
+                case "Scan" -> scan();
             }
         }
     }
