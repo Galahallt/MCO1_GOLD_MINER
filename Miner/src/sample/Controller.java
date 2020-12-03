@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -9,6 +10,7 @@ import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.util.*;
 
 import java.awt.*;
 import java.util.*;
@@ -22,7 +24,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private final Winner winner;      // Winner layout
 
     private int size;           // Grid size
-    private boolean smart;      // Intelligence level: Smart-true, Random-false
+    private boolean random;      // Intelligence level: Random-true, Smart-false
+
+    private Timeline move;
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -39,7 +43,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.over = new Over();
         this.winner = new Winner();
 
-        miner = new Point(1 ,1);
+        miner = new Point(0 ,0);
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -48,7 +52,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Switches from menu window to grid window
     public void switchToGrid()
     {
-        smart = menu.rbIntSmart.isSelected();
+        random = menu.rbIntRand.isSelected();
 
         System.out.println(gold.getX() + " " + gold.getY());
         window.setScene(grid.buildGrid(size, pits, beacons, gold));
@@ -119,8 +123,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
@@ -163,8 +167,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
@@ -216,49 +220,42 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
-            System.out.println("Game Over!");
         }
         else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
-            System.out.println("Winner!");
         }
     }
 
-    public void auto(){
-        while (miner.getY() < gold.getY()) {    // Down
-            rotate();
-            move();
-        }
-        while (miner.getX() > gold.getX()) {    // Left
-            rotate();
-            move();
-        }
-        while (miner.getY() > gold.getY()) {    // Up
-            rotate();
-            move();
-        }
-        while (miner.getX() < gold.getX()) {    // Right
-            rotate();
-            move();
-        }
-    }
-
-     */
-    public void animateMiner()
+    public void randLvl()
     {
-        Timeline move = new Timeline(
-                new KeyFrame(
-                        Duration.millis(400), event -> grid.move(size)
-                )
-        );
-
-        move.setCycleCount(1);
-        move.setAutoReverse(false);
-        move.setOnFinished(e -> Platform.runLater(() -> grid.miner.getX()));
-        move.play();
+        Random rand = new Random();
+        switch (rand.nextInt(2)) {
+            case 0 -> rotate();
+            case 1 -> move();
+        }
+        if (ifOver() || ifWinner())
+            move.stop();
     }
 
+    public void execute()
+    {
+        if (random) {
+            move = new Timeline(
+                    new KeyFrame(
+                            Duration.millis(400), event -> randLvl()
+                    )
+            );
+
+            move.setCycleCount(Animation.INDEFINITE);
+            move.play();
+            if (ifOver() || ifWinner())
+                move.stop();
+        }
+        else {
+            System.out.println("Smart intelligence level not yet coded!");
+        }
+    }
 
     // Handles events
     @Override
@@ -272,7 +269,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             System.out.println("Event");
     }
 
-    public void handle(ActionEvent e){
+    public void handle(ActionEvent e) {
         String strButton;
 
         if (e.getSource() instanceof Button) {
@@ -289,23 +286,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     updateBeaconView();
                 }
                 // Debug Miner Movement
-                case "Rotate" -> {
-                    rotate();
-                }
-                case "Move" -> {
+                case "Rotate" -> rotate();
+                case "Move" -> move();
+                case "Execute" -> execute();
 
-                    animateMiner();
-
-
-                }
-
-                /*
-                case "Auto" -> {
-
-                    move();
-                 }
-                case "Auto" ->
-                    auto();
             }
         }
     }
