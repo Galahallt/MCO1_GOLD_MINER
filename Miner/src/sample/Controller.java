@@ -26,6 +26,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private int size;           // Grid size
     private boolean random;      // Intelligence level: Random-true, Smart-false
 
+    private Timeline move;
+
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
@@ -121,8 +123,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
@@ -165,8 +167,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() > 0 && p.getX() <= size)
-                        && (p.getY() > 0 && p.getY() <= size)
+                        && (p.getX() >= 0 && p.getX() < size)
+                        && (p.getY() >= 0 && p.getY() < size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
@@ -218,14 +220,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
-            System.out.println("Game Over!");
-            System.exit(0);
         }
         else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
-            System.out.println("Winner!");
-            System.exit(0);
         }
     }
 
@@ -236,11 +234,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             case 0 -> rotate();
             case 1 -> move();
         }
+        if (ifOver() || ifWinner())
+            move.stop();
     }
 
     public void execute()
     {
-        Timeline move;
         if (random) {
             move = new Timeline(
                     new KeyFrame(
@@ -250,24 +249,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             move.setCycleCount(Animation.INDEFINITE);
             move.play();
+            if (ifOver() || ifWinner())
+                move.stop();
         }
         else {
             System.out.println("Smart intelligence level not yet coded!");
         }
     }
-
-    public void animateMiner()
-    {
-        Timeline move = new Timeline(
-                new KeyFrame(
-                        Duration.millis(400), event -> move()
-                )
-        );
-
-        move.setCycleCount(Animation.INDEFINITE);
-        move.play();
-    }
-
 
     // Handles events
     @Override
@@ -305,17 +293,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             }
         }
     }
-
-                /*
-                case "Auto" -> {
-
-                    move();
-                 }
-                case "Auto" ->
-                    auto();
-            }
-        }
-    }*/
 
     // Enables Start button if inputs are valid
     @Override
