@@ -28,6 +28,7 @@ public class Grid
     private int size;
     private int move;
     private int rotation;
+    private int scan;
 
     GridPane grid = new GridPane();
 
@@ -120,7 +121,7 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\n");
+        lblStats = new Label("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\nScans: " + scan + "\n");
         lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
         grid.add(lblStats, 0, 0);
 
@@ -148,7 +149,7 @@ public class Grid
 
     public void updateStats()
     {
-        lblStats.setText("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\n");
+        lblStats.setText("Stats:\nMoves: " + move + "\nRotations: " + rotation + "\nScans: " + scan + "\n");
     }
 
     public void rotate()
@@ -207,6 +208,8 @@ public class Grid
     public int scan() {
         int orientation = (int) miner.getRotate();
         Point p;
+        scan++;
+        updateStats();
 
         int x = GridPane.getRowIndex(miner);
         int y = GridPane.getColumnIndex(miner);
