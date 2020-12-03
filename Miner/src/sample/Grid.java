@@ -33,7 +33,7 @@ public class Grid
     //Debug Miner moves
     Button btnRotate = new Button("Rotate");
     Button btnMove = new Button("Move");
-    Button btnAuto = new Button("Auto");
+    Button btnAuto = new Button("Execute");
 
     Label lblStats;
 
@@ -184,7 +184,7 @@ public class Grid
 
         updateStats();
 
-        System.out.println("(" + GridPane.getRowIndex(miner) + ", " + GridPane.getColumnIndex(miner) + ")");
+        System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
 
         return (new Point(x, y));
     }
