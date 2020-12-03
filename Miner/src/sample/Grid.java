@@ -81,6 +81,7 @@ public class Grid
             pit.setFitWidth(50);
             pit.setFitHeight(50);
             gridBoard.add(pit, (int) point.getX(), (int) point.getY());
+
         }
 
         // add beacons to grid

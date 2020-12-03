@@ -269,10 +269,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     updateBeaconView();
                 }
                 // Debug Miner Movement
-                case "Rotate" ->
+                case "Rotate" -> {
                     rotate();
-                case "Move" ->
+                }
+                case "Move" -> {
                     move();
+                 }
                 case "Auto" ->
                     auto();
             }
