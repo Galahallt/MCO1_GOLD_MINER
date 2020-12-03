@@ -22,11 +22,12 @@ import static javafx.scene.paint.Color.BROWN;
 
 public class Grid
 {
-    public ArrayList<Rectangle> boxes = new ArrayList<>();
-    public ImageView miner = new ImageView("sample/Miner.png");
+    private ArrayList<Rectangle> boxes = new ArrayList<>();
+    private ImageView miner = new ImageView("sample/Miner.png");
 
-    public int move;
-    public int rotation;
+    private int size;
+    private int move;
+    private int rotation;
 
     GridPane grid = new GridPane();
 
@@ -34,13 +35,26 @@ public class Grid
     Button btnRotate = new Button("Rotate");
     Button btnMove = new Button("Move");
     Button btnAuto = new Button("Execute");
+    Button btnScan = new Button("Scan");
 
     Label lblStats;
+
+    ArrayList<Point> pits;
+    ArrayList<Point> beacons;
+    Point goldPot;
 
     // Scene builder
     public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
+        this.size = size;
+        this.pits = pits;
+        this.beacons = beacons;
+        this.goldPot = goldPot;
+
         //Debug code
+        GridPane.setConstraints(btnScan, 0, 1);
+        GridPane.setHalignment(btnScan, HPos.LEFT);
+
         GridPane.setConstraints(btnRotate, 0, 1);
         GridPane.setHalignment(btnRotate, HPos.CENTER);
 
@@ -49,7 +63,7 @@ public class Grid
 
         GridPane.setConstraints(btnMove, 1, 1);
         GridPane.setHalignment(btnMove, HPos.CENTER);
-        grid.getChildren().addAll(btnRotate, btnMove, btnAuto);
+        grid.getChildren().addAll(btnScan, btnRotate, btnMove, btnAuto);
 
         GridPane gridBoard = new GridPane();
         ScrollPane scroll = new ScrollPane(gridBoard);
@@ -184,16 +198,73 @@ public class Grid
 
         updateStats();
 
-        System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
+        //System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
 
         return (new Point(x, y));
     }
 
+    // 0empty, 1pit, 2beacon, 3gold
+    public int scan() {
+        int orientation = (int) miner.getRotate();
+        Point p;
 
+        switch (orientation) {
+            case 0 -> {     // Looking Right
+                for (int i = (int) miner.getX(); i < size; i++) {
+                    p = new Point(i, (int) miner.getY());
+                    if (pits.contains(p))
+                        return 1;
+                    else if (beacons.contains(p))
+                        return 2;
+                    else if (goldPot.equals(p))
+                        return 3;
+                }
+                return 0;
+            }
+            case 90 -> {    // Looking Down
+                for (int i = (int) miner.getY(); i < size; i++) {
+                    p = new Point((int) miner.getX(), i);
+                    if (pits.contains(p))
+                        return 1;
+                    else if (beacons.contains(p))
+                        return 2;
+                    else if (goldPot.equals(p))
+                        return 3;
+                }
+                return 0;
+            }
+            case 180 -> {    // Looking Left
+                for (int i = (int) miner.getX(); i >= 0; i--) {
+                    p = new Point(i, (int) miner.getY());
+                    if (pits.contains(p))
+                        return 1;
+                    else if (beacons.contains(p))
+                        return 2;
+                    else if (goldPot.equals(p))
+                        return 3;
+                }
+                return 0;
+            }
+            case 270 -> {    // Looking Up
+                for (int i = (int) miner.getY(); i >= 0; i--) {
+                    p = new Point((int) miner.getX(), i);
+                    if (pits.contains(p))
+                        return 1;
+                    else if (beacons.contains(p))
+                        return 2;
+                    else if (goldPot.equals(p))
+                        return 3;
+                }
+                return 0;
+            }
+        }
+        return -1;  // Angle of miner is not divisible by 90
+    }
 
     // Allows events of listed objects to be handled
     public void setEventHandlers(Controller cont)
     {
+        btnScan.setOnAction((EventHandler) cont);
         btnRotate.setOnAction((EventHandler) cont);
 
         btnMove.setOnAction((EventHandler) cont);
