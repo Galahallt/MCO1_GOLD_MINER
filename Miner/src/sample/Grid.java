@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -12,6 +14,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -185,6 +188,8 @@ public class Grid
 
         return (new Point(x, y));
     }
+
+
 
     // Allows events of listed objects to be handled
     public void setEventHandlers(Controller cont)
