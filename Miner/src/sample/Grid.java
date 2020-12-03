@@ -34,7 +34,6 @@ public class Grid
 
     Label lblStats;
 
-
     // Scene builder
     public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
@@ -71,8 +70,7 @@ public class Grid
             {
                 Rectangle box = new Rectangle(50, 50);
                 box.setFill(BROWN);
-                GridPane.setConstraints(box, i, j);
-                gridBoard.getChildren().add(box);
+                gridBoard.add(box, i, j);
                 boxes.add(box);
             }
         }
@@ -82,8 +80,8 @@ public class Grid
             ImageView pit = new ImageView("sample/Pit.png");
             pit.setFitWidth(50);
             pit.setFitHeight(50);
-            GridPane.setConstraints(pit, (int) point.getX(), (int) point.getY());
-            gridBoard.getChildren().add(pit);
+            gridBoard.add(pit, (int) point.getX(), (int) point.getY());
+
         }
 
         // add beacons to grid
@@ -91,20 +89,17 @@ public class Grid
             ImageView beacon = new ImageView("sample/Beacon.png");
             beacon.setFitWidth(50);
             beacon.setFitHeight(50);
-            GridPane.setConstraints(beacon, (int) point.getX(), (int) point.getY());
-            gridBoard.getChildren().add(beacon);
+            gridBoard.add(beacon, (int) point.getX(), (int) point.getY());
         }
 
         // add gold to grid
         ImageView gold = new ImageView("sample/Gold.png");
         gold.setFitHeight(50);
         gold.setFitWidth(50);
-        GridPane.setConstraints(gold, (int) goldPot.getX(), (int) goldPot.getY());
-        gridBoard.getChildren().add(gold);
+        //GridPane.setConstraints(gold, (int) goldPot.getX(), (int) goldPot.getY());
+        gridBoard.add(gold, (int) goldPot.getX(), (int) goldPot.getY());
 
-
-        GridPane.setConstraints(miner, 0, 0);
-        gridBoard.getChildren().add(miner);
+        gridBoard.add(miner, 0, 0);
 
 
         //Stats label
@@ -141,9 +136,6 @@ public class Grid
 
     public void rotate()
     {
-        // if scaleX == -1 -> left
-
-
         miner.setRotate((miner.getRotate() + 90) % 360);
 
         if (miner.getRotate() == 180)
@@ -153,7 +145,6 @@ public class Grid
         rotation++;
         updateStats();
     }
-
 
     public Point move(int size)
     {

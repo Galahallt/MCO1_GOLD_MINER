@@ -1,36 +1,24 @@
 package sample;
 
-import javafx.animation.PauseTransition;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.input.*; // Mouse event
-import javafx.scene.image.*; // Image, ImageView
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
     Stage window;               // primaryStage
-    private Menu menu;          // Menu layout
-    private Grid grid;          // Grid layout
-    private Over over;          // Over layout
-    private Winner winner;      // Winner layout
+    private final Menu menu;          // Menu layout
+    private final Grid grid;          // Grid layout
+    private final Over over;          // Over layout
+    private final Winner winner;      // Winner layout
 
     private int size;           // Grid size
     private boolean smart;      // Intelligence level: Smart-true, Random-false
-
-    private int orientation;    // 1right, 2down, 3left, 4up
-
-    PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -47,8 +35,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.over = new Over();
         this.winner = new Winner();
 
-        miner = new Point(0 ,0);
-        orientation = 1;
+        miner = new Point(1 ,1);
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -57,10 +44,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Switches from menu window to grid window
     public void switchToGrid()
     {
-
-        //grid.setEventHandlers(this);
-
-        ImageView miner = grid.miner;
         smart = menu.rbIntSmart.isSelected();
 
         System.out.println(gold.getX() + " " + gold.getY());
@@ -100,12 +83,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             int x = a.nextInt();
             int y = a.nextInt();
 
-            if (x == 0 && y == 0) {     // Miner's initial position
+            if (x == 1 && y == 1) {     // Miner's initial position
                 gold = null;
                 return false;
             }
-            else if (x >= 0 && x < size && y >= 0 && y < size) {    // Is valid coordinate according to grid size
-                gold = new Point(x, y);
+            else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
+                gold = new Point(x - 1, y - 1);
                 return !(pits.contains(gold) || beacons.contains(gold));   // If already a pit/beacon
             }
             else {
@@ -125,15 +108,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             String input = menu.tfPit.getText();
             Scanner a = new Scanner(input);
 
-            int x = a.nextInt();
-            int y = a.nextInt();
+            int x = a.nextInt() - 1;
+            int y = a.nextInt() - 1;
 
             Point p = new Point(x, y);
 
             if (strBtn == "Add Pit") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() >= 0 && p.getX() < size)
-                        && (p.getY() >= 0 && p.getY() < size)
+                        && (p.getX() > 0 && p.getX() <= size)
+                        && (p.getY() > 0 && p.getY() <= size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
@@ -150,13 +133,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-
     //Update View for pit
     public void updatePitView() {
         if (pits.size() > 0) {      // Prevents index out of bounds when pit is empty
             String display = "";
             for (Point pit : pits)
-                display += "(" + (int) pit.getX() + ", " + (int) pit.getY() + ")\n";
+                display += "(" + ((int) pit.getX() + 1) + ", " + ((int) pit.getY() + 1) + ")\n";
             menu.taPit.setText(display);
         }
         else
@@ -170,15 +152,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             String input = menu.tfBeacon.getText();
             Scanner a = new Scanner(input);
 
-            int x = a.nextInt();
-            int y = a.nextInt();
+            int x = a.nextInt() - 1;
+            int y = a.nextInt() - 1;
 
             Point p = new Point(x, y);
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
-                        && (p.getX() >= 0 && p.getX() < size)
-                        && (p.getY() >= 0 && p.getY() < size)
+                        && (p.getX() > 0 && p.getX() <= size)
+                        && (p.getY() > 0 && p.getY() <= size)
                         && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
@@ -199,7 +181,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (beacons.size() > 0) {      // Prevents index out of bounds when beacon is empty
             String display = "";
             for (Point beacon : beacons)
-                display += "(" + (int) beacon.getX() + ", " + (int) beacon.getY() + ")\n";
+                display += "(" + ((int) beacon.getX() + 1) + ", " + ((int) beacon.getY() + 1) + ")\n";
             menu.taBeacon.setText(display);
         }
         else
@@ -216,17 +198,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public boolean ifWinner()
     {
-        if (gold.getX() == miner.getX() && gold.getY() == miner.getY())
-            return true;
-        return false;
+        return gold.getX() == miner.getX() && gold.getY() == miner.getY();
     }
 
     public void rotate()
     {
         grid.rotate();
-        orientation = 1;
     }
-
 
     public void move()
     {
@@ -243,27 +221,24 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    /*
     public void auto(){
-        while (miner.getX() > gold.getX()) {
-            left();
+        while (miner.getY() < gold.getY()) {    // Down
+            rotate();
             move();
         }
-        while (miner.getX() < gold.getX()) {
-            right();
+        while (miner.getX() > gold.getX()) {    // Left
+            rotate();
             move();
         }
-        while (miner.getY() > gold.getY()) {
-            up();
+        while (miner.getY() > gold.getY()) {    // Up
+            rotate();
             move();
         }
-        while (miner.getY() < gold.getY()) {
-            down();
+        while (miner.getX() < gold.getX()) {    // Right
+            rotate();
             move();
         }
     }
-
-     */
 
     // Handles events
     @Override
@@ -299,14 +274,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 case "Move" -> {
                     move();
-                }
-
-                /*
-                case "Auto" -> {
+                 }
+                case "Auto" ->
                     auto();
-                }
-
-                 */
             }
         }
     }
