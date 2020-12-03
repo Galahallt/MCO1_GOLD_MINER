@@ -105,6 +105,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         size = a.nextInt();
         menu.tfGold.setDisable(false);
         menu.btnSize.setDisable(true);
+        menu.tfGrid.setDisable(true);
 
         sizeSet = true;
     }
@@ -118,13 +119,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         int y = a.nextInt();
 
         gold = new Point(x - 1, y - 1);
-        menu.btnStart.setDisable(false);
         menu.btnGold.setDisable(true);
+        menu.btnPitSet.setDisable(false);
 
         goldSet = true;
 
+        menu.tfGold.setDisable(true);
         menu.tfPit.setDisable(false);
-        menu.tfBeacon.setDisable(false);
     }
 
     // Adds/Removes valid pit coordinate
@@ -210,6 +211,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
         else
             menu.taBeacon.clear();
+    }
+
+    public void setPits()
+    {
+        menu.btnPitSet.setDisable(true);
+        menu.btnPitAdd.setDisable(true);
+        menu.btnPitRem.setDisable(true);
+        menu.tfPit.setDisable(true);
+
+        menu.btnStart.setDisable(false);
+        menu.tfBeacon.setDisable(false);
     }
 
     public boolean ifOver()
@@ -334,6 +346,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     addRemBeacon(strButton);
                     updateBeaconView();
                 }
+                case "Set Pits" -> setPits();
                 // Debug Miner Movement
                 case "Rotate" -> rotate();
                 case "Move" -> move();

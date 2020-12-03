@@ -37,6 +37,8 @@ public class Menu
     public Button btnSize;
     public Button btnGold;
 
+    public Button btnPitSet;
+
     // Scene builder
     public Scene buildMenu()
     {
@@ -110,6 +112,12 @@ public class Menu
         GridPane.setConstraints(lblPitXY, 0, 6);
         lblPitXY.setDisable(true);
 
+        //Set pits button
+        btnPitSet = new Button("Set Pits");
+        GridPane.setConstraints(btnPitSet, 0, 6);
+        GridPane.setHalignment(btnPitSet, HPos.RIGHT);
+        btnPitSet.setDisable(true);
+
         //Pit Text Area Coordinates
         taPit = new TextArea();
         taPit.setDisable(true);
@@ -176,7 +184,7 @@ public class Menu
         grid.getChildren().addAll(lblGrid, tfGrid, btnSize, lblInt, rbIntRand,
                 rbIntSmart, lblPit, tfPit, lblBeacon, tfBeacon,
                 lblGold, tfGold, btnGold, btnStart, btnPitAdd, btnBeaconAdd,
-                btnPitRem, btnBeaconRem, taBeacon, taPit, lblPitXY,
+                btnPitRem, btnBeaconRem, taBeacon, taPit, btnPitSet, lblPitXY,
                 lblBeaconXY);
 
         ColumnConstraints cc = new ColumnConstraints();
@@ -204,6 +212,8 @@ public class Menu
 
         btnSize.setOnAction((EventHandler) cont);
         btnGold.setOnAction((EventHandler) cont);
+
+        btnPitSet.setOnAction((EventHandler) cont);
 
         tfGrid.textProperty().addListener(cont);
         tfGold.textProperty().addListener(cont);
