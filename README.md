@@ -15,6 +15,7 @@ Updates:
   - [Grid.java] Added Scan stat and updated stat display
   - [Grid.java] Fixed movement functions
   - [Grid.java] Fixed coordinates
+  - [Menu.java] Editted layout
 
 [11/30/2020]
   - [Miner] Added some gitignore files to (hopefully) ignore Project Structure and VM Option changes
