@@ -6,6 +6,17 @@ PEREZ, James Andrew F.
 
 Updates:
 
+[12/03/2020]
+  - [Controller.java] Added Random intelligence and Scan function
+  - [Controller.java] Added delay animation
+  - [Controller.java] Fixed rotation function
+  - [Controller.java] Fixed coordinates and coordinate checker functions
+  - [Grid.java] Added Scan function
+  - [Grid.java] Added Scan stat and updated stat display
+  - [Grid.java] Fixed movement functions
+  - [Grid.java] Fixed coordinates
+  - [Menu.java] Editted layout
+
 [11/30/2020]
   - [Miner] Added some gitignore files to (hopefully) ignore Project Structure and VM Option changes
   - [Miner/src/sample] Added Over.java and Winner.java

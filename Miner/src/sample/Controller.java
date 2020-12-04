@@ -2,9 +2,7 @@ package sample;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
@@ -24,7 +22,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private final Winner winner;      // Winner layout
 
     private int size;           // Grid size
-    private boolean random;      // Intelligence level: Random-true, Smart-false
+    private boolean random;     // Intelligence level: Random-true, Smart-false
+
+    private boolean sizeSet;    // Is grid size final?
+    private boolean goldSet;    // is gold coordinate final?
 
     private Timeline move;
 
@@ -43,6 +44,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         this.over = new Over();
         this.winner = new Winner();
 
+        sizeSet = false;
+        goldSet = false;
+
         miner = new Point(0 ,0);
 
         grid.setEventHandlers(this);
@@ -60,53 +64,68 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Grid size checker
-    public boolean checkGrid()
+    public void checkGrid()
     {
-        try {
-            String input = menu.tfGrid.getText();
-            Scanner a = new Scanner(input);
+        if (!sizeSet) {
+            try {
+                String input = menu.tfGrid.getText();
+                Scanner a = new Scanner(input);
 
-            int num = a.nextInt();
-            if (num >= 8 && num <= 64) {    // Is within accepted range
-                size = num;
-                return true;
+                int num = a.nextInt();
+                menu.btnSize.setDisable(num < 8 || num > 64);   // Is within accepted range
+            } catch (Exception e) {
+                menu.btnSize.setDisable(true);
             }
-            else {
-                size = 0;
-                return false;
-            }
-        } catch (Exception e) {
-            size = 0;
-            return false;
         }
     }
 
     // Gold coordinates checker
-    public boolean checkGold()
+    public void checkGold()
     {
-        try {
-            String input = menu.tfGold.getText();
-            Scanner a = new Scanner(input);
+        if (!goldSet) {
+            try {
+                String input = menu.tfGold.getText();
+                Scanner a = new Scanner(input);
 
-            int x = a.nextInt();
-            int y = a.nextInt();
+                int x = a.nextInt();
+                int y = a.nextInt();
 
-            if (x == 1 && y == 1) {     // Miner's initial position
-                gold = null;
-                return false;
+                menu.btnGold.setDisable(x <= 0 || x > size || y <= 0 || y > size);  // Is valid coordinate according to grid size
+            } catch (Exception e) {
+                menu.btnGold.setDisable(true);
             }
-            else if (x > 0 && x <= size && y > 0 && y <= size) {    // Is valid coordinate according to grid size
-                gold = new Point(x - 1, y - 1);
-                return !(pits.contains(gold) || beacons.contains(gold));   // If already a pit/beacon
-            }
-            else {
-                gold = null;
-                return false;
-            }
-        } catch (Exception e) {
-            gold = null;
-            return false;
         }
+    }
+
+    public void setSize()
+    {
+        String input = menu.tfGrid.getText();
+        Scanner a = new Scanner(input);
+
+        size = a.nextInt();
+        menu.tfGold.setDisable(false);
+        menu.btnSize.setDisable(true);
+        menu.tfGrid.setDisable(true);
+
+        sizeSet = true;
+    }
+
+    public void setGold()
+    {
+        String input = menu.tfGold.getText();
+        Scanner a = new Scanner(input);
+
+        int x = a.nextInt();
+        int y = a.nextInt();
+
+        gold = new Point(x - 1, y - 1);
+        menu.btnGold.setDisable(true);
+        menu.btnPitSet.setDisable(false);
+
+        goldSet = true;
+
+        menu.tfGold.setDisable(true);
+        menu.tfPit.setDisable(false);
     }
 
     // Adds/Removes valid pit coordinate
@@ -125,7 +144,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 if (!pits.contains(p) && !beacons.contains(p)
                         && (p.getX() >= 0 && p.getX() < size)
                         && (p.getY() >= 0 && p.getY() < size)
-                        && !(p.equals(miner))
                         && !p.equals(gold))
                     pits.add(p);
                 else
@@ -169,7 +187,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 if (!pits.contains(p) && !beacons.contains(p)
                         && (p.getX() >= 0 && p.getX() < size)
                         && (p.getY() >= 0 && p.getY() < size)
-                        && !(p.equals(miner))
                         && !p.equals(gold))
                     beacons.add(p);
                 else
@@ -194,6 +211,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
         else
             menu.taBeacon.clear();
+    }
+
+    public void setPits()
+    {
+        menu.btnPitSet.setDisable(true);
+        menu.btnPitAdd.setDisable(true);
+        menu.btnPitRem.setDisable(true);
+        menu.tfPit.setDisable(true);
+
+        menu.btnStart.setDisable(false);
+        menu.tfBeacon.setDisable(false);
     }
 
     public boolean ifOver()
@@ -265,6 +293,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public void execute()
     {
+        // Check if pit/gold is in starting position of miner
+        if (ifOver()) {
+            window.setScene(over.buildOver());
+            window.show();
+        }
+        else if (ifWinner()) {
+            window.setScene(winner.buildWinner());
+            window.show();
+        }
+
+        // Start animation
         move = new Timeline(
                 new KeyFrame(
                         Duration.millis(400), event -> animate()
@@ -297,6 +336,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             // if Start button is pressed
             switch (strButton) {
                 case "START!" -> switchToGrid();
+                case "Set Size" -> setSize();
+                case "Set Gold" -> setGold();
                 case "Add Pit", "Remove Pit" -> {
                     addRemPit(strButton);
                     updatePitView();
@@ -305,6 +346,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     addRemBeacon(strButton);
                     updateBeaconView();
                 }
+                case "Set Pits" -> setPits();
                 // Debug Miner Movement
                 case "Rotate" -> rotate();
                 case "Move" -> move();
@@ -318,9 +360,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
     {
-        boolean gridSize = checkGrid();
-        boolean goldCo = checkGold();
-
-        menu.btnStart.setDisable(!gridSize || !goldCo);
+        if (!sizeSet)
+            checkGrid();
+        if (!goldSet)
+            checkGold();
     }
 }
