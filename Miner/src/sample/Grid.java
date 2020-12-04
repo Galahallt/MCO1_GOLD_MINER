@@ -23,7 +23,7 @@ import static javafx.scene.paint.Color.BROWN;
 public class Grid
 {
     private ArrayList<Rectangle> boxes = new ArrayList<>();
-    private ImageView miner = new ImageView("sample/Miner.png");
+    public ImageView miner = new ImageView("sample/Miner.png");
 
     private int size;
     private int move;

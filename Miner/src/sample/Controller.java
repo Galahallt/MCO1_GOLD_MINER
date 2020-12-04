@@ -7,6 +7,7 @@ import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 
@@ -128,6 +129,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
         menu.tfGold.setDisable(true);
         menu.tfPit.setDisable(false);
+        menu.btnStart.setDisable(false);
     }
 
     // Adds/Removes valid pit coordinate
@@ -296,21 +298,18 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         menu.btnBeaconAdd.setDisable(true);
         menu.btnBeaconRem.setDisable(true);
         menu.tfBeacon.setDisable(true);
-
-        menu.btnStart.setDisable(false);
     }
 
     public boolean ifOver()
     {
-        for (Point pit : pits)
-            if (pit.getX() == miner.getX() && pit.getY() == miner.getY())
-                return true;
-        return false;
+        Point p = new Point (GridPane.getRowIndex(grid.miner), GridPane.getColumnIndex(grid.miner));
+        return pits.contains(p);
     }
 
     public boolean ifWinner()
     {
-        return gold.getX() == miner.getX() && gold.getY() == miner.getY();
+        Point p = new Point (GridPane.getRowIndex(grid.miner), GridPane.getColumnIndex(grid.miner));
+        return gold.equals(p);
     }
 
     public void rotate()
@@ -388,8 +387,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
         move.setCycleCount(Animation.INDEFINITE);
         move.play();
-        if (ifOver() || ifWinner())
-            move.stop();
+
     }
 
     // Handles events
