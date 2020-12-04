@@ -120,6 +120,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
         gold = new Point(x - 1, y - 1);
         menu.btnGold.setDisable(true);
+        menu.btnPitAdd.setDisable(false);
+        menu.btnPitRem.setDisable(false);
         menu.btnPitSet.setDisable(false);
 
         goldSet = true;
@@ -170,24 +172,84 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         else
             menu.taPit.clear();
     }
+    //checks the tiles in between the beacon and gold along the x-coordinate
+    public boolean checkBetweenBGX(Point p)
+    {
+        Point temp;
+        if (p.getX() > gold.getX())
+        {
+            for (int i = (int) gold.getX() + 1; i < p.getX(); i++)
+            {
+                temp = new Point(i, (int) p.getY());
+                if (pits.contains(temp))
+                    return true; // there is an obstruction (pit)
+            }
+        }
+        else
+        {
+            for (int i = (int) p.getX() + 1; i < gold.getX(); i++)
+            {
+                temp = new Point(i, (int) p.getY());
+                if (pits.contains(temp))
+                    return true; // there is an obstruction (pit)
+            }
+        }
+        return false;
+    }
 
-    // adds valid beacon coordinate
+    //checks the tiles in between the beacon and gold along the y-coordinate
+    public boolean checkBetweenBGY(Point p)
+    {
+        Point temp;
+        if (p.getY() > gold.getY())
+        {
+            for (int i = (int) gold.getY() + 1; i < p.getY(); i++)
+            {
+                temp = new Point((int) p.getX(), i);
+                if (pits.contains(temp))
+                    return true; // there is an obstruction (pit)
+            }
+        }
+        else
+        {
+            for (int i = (int) p.getY() + 1; i < gold.getY(); i++)
+            {
+                temp = new Point((int) p.getX(), i);
+                if (pits.contains(temp))
+                    return true; // there is an obstruction (pit)
+            }
+        }
+        return false;
+    }
+
+
+
+    // adds/removes valid beacon coordinate
     public void addRemBeacon(String strBtn)
     {
         try {
             String input = menu.tfBeacon.getText();
             Scanner a = new Scanner(input);
+            Boolean obstruction = false;
 
             int x = a.nextInt() - 1;
             int y = a.nextInt() - 1;
 
             Point p = new Point(x, y);
+            if (!p.equals(gold))
+            {
+                if (p.getX() == gold.getX())
+                    obstruction = checkBetweenBGY(p);
+                else if (p.getY() == gold.getY())
+                    obstruction = checkBetweenBGX(p);
+            }
+
 
             if (strBtn == "Add Beacon") {
                 if (!pits.contains(p) && !beacons.contains(p)
                         && (p.getX() >= 0 && p.getX() < size)
                         && (p.getY() >= 0 && p.getY() < size)
-                        && !p.equals(gold))
+                        && !p.equals(gold) && !obstruction)
                     beacons.add(p);
                 else
                     System.out.println("Invalid Input! (Beacon)");
@@ -213,6 +275,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             menu.taBeacon.clear();
     }
 
+    //Do this if the button for "Set Pits" is clicked
     public void setPits()
     {
         menu.btnPitSet.setDisable(true);
@@ -220,8 +283,21 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         menu.btnPitRem.setDisable(true);
         menu.tfPit.setDisable(true);
 
-        menu.btnStart.setDisable(false);
+        menu.btnBeaconAdd.setDisable(false);
+        menu.btnBeaconRem.setDisable(false);
+        menu.btnBeaconSet.setDisable(false);
         menu.tfBeacon.setDisable(false);
+    }
+
+    //Do this if the button for "Set Beacons" is clicked
+    public void setBeacons()
+    {
+        menu.btnBeaconSet.setDisable(true);
+        menu.btnBeaconAdd.setDisable(true);
+        menu.btnBeaconRem.setDisable(true);
+        menu.tfBeacon.setDisable(true);
+
+        menu.btnStart.setDisable(false);
     }
 
     public boolean ifOver()
@@ -348,6 +424,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 }
                 case "Set Pits" -> setPits();
                 // Debug Miner Movement
+                case "Set Beacons" -> setBeacons();
                 case "Rotate" -> rotate();
                 case "Move" -> move();
                 case "Execute" -> execute();

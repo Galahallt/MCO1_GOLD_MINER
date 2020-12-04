@@ -38,6 +38,7 @@ public class Menu
     public Button btnGold;
 
     public Button btnPitSet;
+    public Button btnBeaconSet;
 
     // Scene builder
     public Scene buildMenu()
@@ -100,11 +101,13 @@ public class Menu
         //Pit Add Coordinate Button
         btnPitAdd = new Button("Add Pit");
         GridPane.setConstraints(btnPitAdd, 0, 5);
+        btnPitAdd.setDisable(true);
 
         //Pit Remove Coordinate Button
         btnPitRem = new Button ("Remove Pit");
         GridPane.setConstraints(btnPitRem, 0, 5);
         GridPane.setHalignment(btnPitRem, HPos.RIGHT);
+        btnPitRem.setDisable(true);
 
         //Pit Coordinates Label
         Label lblPitXY = new Label("Pit Coordinates:");
@@ -139,17 +142,25 @@ public class Menu
         //Beacon Add Coordinate Button
         btnBeaconAdd = new Button("Add Beacon");
         GridPane.setConstraints(btnBeaconAdd, 1, 5);
+        btnBeaconAdd.setDisable(true);
 
         //Beacon Remove Coordinate Button
         btnBeaconRem = new Button ("Remove Beacon");
         GridPane.setConstraints(btnBeaconRem, 1, 5);
         GridPane.setHalignment(btnBeaconRem, HPos.RIGHT);
+        btnBeaconRem.setDisable(true);
 
         //Beacon Coordinates Label
         Label lblBeaconXY = new Label("Beacon Coordinates:");
         lblBeaconXY.setStyle("-fx-text-fill: white;");
         GridPane.setConstraints(lblBeaconXY, 1, 6);
         lblBeaconXY.setDisable(true);
+
+        //Set Beacons Button
+        btnBeaconSet = new Button("Set Beacons");
+        GridPane.setConstraints(btnBeaconSet, 1, 6);
+        GridPane.setHalignment(btnBeaconSet, HPos.RIGHT);
+        btnBeaconSet.setDisable(true);
 
         //Beacon Text Area Coordinates
         taBeacon = new TextArea();
@@ -184,8 +195,8 @@ public class Menu
         grid.getChildren().addAll(lblGrid, tfGrid, btnSize, lblInt, rbIntRand,
                 rbIntSmart, lblPit, tfPit, lblBeacon, tfBeacon,
                 lblGold, tfGold, btnGold, btnStart, btnPitAdd, btnBeaconAdd,
-                btnPitRem, btnBeaconRem, taBeacon, taPit, btnPitSet, lblPitXY,
-                lblBeaconXY);
+                btnPitRem, btnBeaconRem, taBeacon, taPit, btnPitSet, btnBeaconSet,
+                lblPitXY, lblBeaconXY);
 
         ColumnConstraints cc = new ColumnConstraints();
         cc.setPercentWidth(100d/grid.getColumnCount());
@@ -214,6 +225,7 @@ public class Menu
         btnGold.setOnAction((EventHandler) cont);
 
         btnPitSet.setOnAction((EventHandler) cont);
+        btnBeaconSet.setOnAction((EventHandler) cont);
 
         tfGrid.textProperty().addListener(cont);
         tfGold.textProperty().addListener(cont);
