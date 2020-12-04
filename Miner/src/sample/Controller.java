@@ -7,6 +7,7 @@ import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.*;
@@ -34,7 +35,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
     Point gold;                 // Coordinate of gold
-    Point miner;                // Coordinate of miner
 
     // Constructor
     public Controller(Menu menu, Stage window)
@@ -48,7 +48,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         sizeSet = false;
         goldSet = false;
 
-        miner = new Point(0 ,0);
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
@@ -80,6 +79,19 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    public void setSize()
+    {
+        String input = menu.tfGrid.getText();
+        Scanner a = new Scanner(input);
+
+        size = a.nextInt();
+        menu.tfGold.setDisable(false);
+        menu.btnSize.setDisable(true);
+        menu.tfGrid.setDisable(true);
+
+        sizeSet = true;
+    }
+
     // Gold coordinates checker
     public void checkGold()
     {
@@ -96,19 +108,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 menu.btnGold.setDisable(true);
             }
         }
-    }
-
-    public void setSize()
-    {
-        String input = menu.tfGrid.getText();
-        Scanner a = new Scanner(input);
-
-        size = a.nextInt();
-        menu.tfGold.setDisable(false);
-        menu.btnSize.setDisable(true);
-        menu.tfGrid.setDisable(true);
-
-        sizeSet = true;
     }
 
     public void setGold()
@@ -319,7 +318,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public void move()
     {
-        miner = grid.move(size);
+        grid.move(size);
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
@@ -332,7 +331,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     public void scan()
     {
-        switch (grid.scan()) {
+        ArrayList<Integer> tile = grid.scan();
+        switch (tile.get(2)) {
             case 0 -> System.out.println("Empty");
             case 1 -> System.out.println("Pit");
             case 2 -> System.out.println("Beacon");
@@ -355,7 +355,90 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Smart Intelligence Level
     public void smartLvl()
     {
+        ImageView miner = grid.miner;
+        int x = GridPane.getRowIndex(miner);
+        int y = GridPane.getColumnIndex(miner);
+        ArrayList<Integer> tile;                    // [x, y, p(1),b(2),g(3)]
+        int orientation = (int) miner.getRotate(); // 0 - right; 90 - down; 180 - left; 360 - up
 
+        switch (orientation) {
+            case 0 -> { // looking right
+                if (x + 1 <= size)
+                {
+                    tile = grid.scan();
+                    if (tile.get(3) == 1 && x < tile.get(0) - 1)
+                    {
+                        move();
+                        rotate();
+                    }
+                    else if (tile.get(3) == 1)
+                        rotate();
+                    else if (tile.get(3) == 2 && x < tile.get(0))
+                        move();
+                    else if (tile.get(3) == 3 && x < tile.get(0))
+                        move();
+
+                }
+                else rotate();
+            }
+            case 90 -> {
+                if (y + 1 <= size)
+                {
+                    tile = grid.scan();
+                    if (tile.get(3) == 1 && y < tile.get(1) - 1)
+                    {
+                        move();
+                        rotate();
+                    }
+                    else if (tile.get(3) == 1)
+                        rotate();
+                    else if (tile.get(3) == 2 && y < tile.get(1))
+                        move();
+                    else if (tile.get(3) == 3 && y < tile.get(1))
+                        move();
+
+                }
+                else rotate();
+            }
+            case 180 -> {
+                if (x - 1 <= size)
+                {
+                    tile = grid.scan();
+                    if (tile.get(3) == 1 && x > tile.get(0) + 1)
+                    {
+                        move();
+                        rotate();
+                    }
+                    else if (tile.get(3) == 1)
+                        rotate();
+                    else if (tile.get(3) == 2 && x > tile.get(0))
+                        move();
+                    else if (tile.get(3) == 3 && x > tile.get(0))
+                        move();
+
+                }
+                else rotate();
+            }
+            case 270 -> {
+                if (y - 1 <= size)
+                {
+                    tile = grid.scan();
+                    if (tile.get(3) == 1 && y > tile.get(0) + 1)
+                    {
+                        move();
+                        rotate();
+                    }
+                    else if (tile.get(3) == 1)
+                        rotate();
+                    else if (tile.get(3) == 2 && y < tile.get(0))
+                        move();
+                    else if (tile.get(3) == 3 && y < tile.get(0))
+                        move();
+
+                }
+                else rotate();
+            }
+        }
     }
 
     public void animate()

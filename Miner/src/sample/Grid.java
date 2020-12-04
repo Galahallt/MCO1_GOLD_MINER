@@ -205,7 +205,7 @@ public class Grid
     }
 
     // 0empty, 1pit, 2beacon, 3gold
-    public int scan() {
+    public ArrayList<Integer> scan() {
         int orientation = (int) miner.getRotate();
         Point p;
         scan++;
@@ -214,57 +214,121 @@ public class Grid
         int x = GridPane.getRowIndex(miner);
         int y = GridPane.getColumnIndex(miner);
 
+        ArrayList<Integer> result = new ArrayList<>();
+
         switch (orientation) {
             case 0 -> {     // Looking Right
                 for (int i = y; i < size; i++) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                        return 1;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(1);
+                        return result;
+                    }
+
                     else if (beacons.contains(p))
-                        return 2;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(2);
+                        return result;
+                    }
                     else if (goldPot.equals(p))
-                        return 3;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(3);
+                        return result;
+                    }
                 }
-                return 0;
+
+                return result;
             }
             case 90 -> {    // Looking Down
                 for (int i = x; i < size; i++) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                        return 1;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(1);
+                        return result;
+                    }
                     else if (beacons.contains(p))
-                        return 2;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(2);
+                        return result;
+                    }
                     else if (goldPot.equals(p))
-                        return 3;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(3);
+                        return result;
+                    }
                 }
-                return 0;
+                return result;
             }
             case 180 -> {    // Looking Left
                 for (int i = y; i >= 0; i--) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                        return 1;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(1);
+                        return result;
+                    }
                     else if (beacons.contains(p))
-                        return 2;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(2);
+                        return result;
+                    }
                     else if (goldPot.equals(p))
-                        return 3;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(3);
+                        return result;
+                    }
                 }
-                return 0;
+                return result;
             }
             case 270 -> {    // Looking Up
                 for (int i = x; i >= 0; i--) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                        return 1;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(1);
+                        return result;
+                    }
                     else if (beacons.contains(p))
-                        return 2;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(2);
+                        return result;
+                    }
                     else if (goldPot.equals(p))
-                        return 3;
+                    {
+                        result.add((int) p.getX());
+                        result.add((int) p.getY());
+                        result.add(3);
+                        return result;
+                    }
                 }
-                return 0;
+                return result;
             }
         }
-        return -1;  // Angle of miner is not divisible by 90
+        return result;
     }
 
     // Allows events of listed objects to be handled
