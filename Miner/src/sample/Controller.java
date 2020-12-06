@@ -316,29 +316,36 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         grid.rotate();
     }
 
-    public void move()
+    // Display credits if game is finished
+    public void credits()
     {
-        grid.move(size);
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
+            move.stop();
         }
         else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
+            move.stop();
         }
+    }
+
+    public void move()
+    {
+        grid.move(size);
     }
 
     // Random Intelligence Level
     public void randLvl()
     {
+        credits();
+
         Random rand = new Random();
         switch (rand.nextInt(2)) {
             case 0 -> rotate();
             case 1 -> move();
         }
-        if (ifOver() || ifWinner())
-            move.stop();
     }
 
     // determines what is in front of the miner up to the edge of the grid
@@ -506,6 +513,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     // Smart Intelligence Level
     public void smartLvl()
     {
+        credits();
         String actions = shortestPath();
 
         switch (smartMove())
@@ -513,47 +521,38 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             case 'm' -> move();
             case 'r' -> rotate();
         }
-
-        if (ifOver() || ifWinner())
-        {
-            System.out.println("Shortest Path: " + actions);
-            move.stop();// end the simulation
-        }
-
-
-    }
-
-    public void animate()
-    {
-        if (random)
-            randLvl();
-        else
-            smartLvl();
     }
 
     public void execute() {
-        int x = 0;
         // Check if pit/gold is in starting position of miner
-        if (ifOver()) {
-            window.setScene(over.buildOver());
-            window.show();
-        } else if (ifWinner()) {
-            window.setScene(winner.buildWinner());
-            window.show();
+        if (ifOver() || ifWinner()) {
+            move = new Timeline(
+                    new KeyFrame(
+                            Duration.millis(400), event -> credits()
+                    )
+            );
         }
-        //smartLvl();
 
+        // Random Intelligence
+        else if (random) {
+            move = new Timeline(
+                    new KeyFrame(
+                            Duration.millis(400), event -> randLvl()
+                    )
+            );
+        }
 
-        // Start animation
-        move = new Timeline(
-                new KeyFrame(
-                        Duration.millis(400), event -> animate()
-                )
-        );
+        // Smart Intelligence
+        else {
+            move = new Timeline(
+                    new KeyFrame(
+                            Duration.millis(400), event -> smartLvl()
+                    )
+            );
 
+        }
         move.setCycleCount(Animation.INDEFINITE);
         move.play();
-
     }
 
     // Handles events
