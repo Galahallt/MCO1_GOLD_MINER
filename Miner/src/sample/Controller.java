@@ -474,9 +474,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         {
             if (!actions.isEmpty())
                 add = actions.remove();
-            if (scan(size, put).length() > 0 )
+            if (scan(size, put).length() > 0)
             {
-                scan = scan(size, put);
+                scan = put + scan(size, put);
                 if (validMove(size, scan))
                     actions.add(scan);
             }
