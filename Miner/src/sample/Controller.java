@@ -6,13 +6,19 @@ import javafx.animation.Timeline;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
@@ -30,6 +36,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private boolean goldSet;    // is gold coordinate final?
 
     private Timeline move;
+    private Timeline display;
 
     private String flow = null;
 
@@ -39,6 +46,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     int smartInd = 0;
 
     Point gold;                 // Coordinate of gold
+
+    @FXML Button btnReset;
 
     // Constructor
     public Controller(Menu menu, Stage window)
@@ -55,6 +64,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
+        over.setEventHandlers(this);
     }
 
     // Switches from menu window to grid window
@@ -328,8 +338,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Display credits if game is finished
-    public void credits()
-    {
+    public void credits() throws IOException {
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
@@ -348,8 +357,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Random Intelligence Level
-    public void randLvl()
-    {
+    public void randLvl() throws IOException {
         credits();
 
         Random rand = new Random();
@@ -524,8 +532,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Smart Intelligence Level
-    public void smartLvl()
-    {
+    public void smartLvl() throws IOException {
         credits();
 
         if (!ifOver() && !ifWinner()) {
@@ -541,31 +548,51 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (ifOver() || ifWinner()) {
             move = new Timeline(
                     new KeyFrame(
-                            Duration.millis(400), event -> credits()
+                            Duration.millis(400), event -> {
+                        try {
+                            credits();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     )
             );
+            move.play();
         }
 
         // Random Intelligence
         else if (random) {
             move = new Timeline(
                     new KeyFrame(
-                            Duration.millis(400), event -> randLvl()
+                            Duration.millis(400), event -> {
+                        try {
+                            randLvl();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     )
             );
+            move.setCycleCount(Animation.INDEFINITE);
+            move.play();
         }
 
         // Smart Intelligence
         else {
             move = new Timeline(
                     new KeyFrame(
-                            Duration.millis(400), event -> smartLvl()
+                            Duration.millis(400), event -> {
+                        try {
+                            smartLvl();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     )
             );
-
+            move.setCycleCount(Animation.INDEFINITE);
+            move.play();
         }
-        move.setCycleCount(Animation.INDEFINITE);
-        move.play();
     }
 
     // Handles events
@@ -604,6 +631,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Rotate" -> rotate();
                 case "Move" -> move();
                 case "Execute" -> execute();
+                case "RETRY" -> window.setScene(menu.buildMenu());
                 //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
                 //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
             }

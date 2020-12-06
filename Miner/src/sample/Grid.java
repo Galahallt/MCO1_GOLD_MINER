@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -14,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -159,7 +156,7 @@ public class Grid
         grid.getRowConstraints().addAll(row1, row2);
         //Debug Grid
         //grid.setGridLinesVisible(true);
-        Scene scene = new Scene(grid, 700, 600);
+        Scene scene = new Scene(grid, 800, 600);
 
         return scene;
     }
