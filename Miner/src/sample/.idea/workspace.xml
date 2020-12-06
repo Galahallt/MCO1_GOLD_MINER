@@ -20,25 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="Added checkers for beacon">
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MinerGame.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Over.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Cave.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Grid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Miner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Miner.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Miner.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/grid.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/Grid.java" afterDir="false" />
     </list>
@@ -60,7 +43,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15/lib" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -269,22 +252,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607101667443" />
-    <state width="1122" height="109" key="GridCell.Tab.0.bottom" timestamp="1607102061403">
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom" timestamp="1607218903656">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="109" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607102061403" />
-    <state width="1122" height="109" key="GridCell.Tab.0.center" timestamp="1607102061402">
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607218903656" />
+    <state width="1493" height="192" key="GridCell.Tab.0.center" timestamp="1607218903656">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="109" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607102061402" />
-    <state width="1122" height="109" key="GridCell.Tab.0.left" timestamp="1607102061402">
+    <state width="1493" height="192" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607218903656" />
+    <state width="1493" height="192" key="GridCell.Tab.0.left" timestamp="1607218903656">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="109" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607102061402" />
-    <state width="1122" height="109" key="GridCell.Tab.0.right" timestamp="1607102061402">
+    <state width="1493" height="192" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607218903656" />
+    <state width="1493" height="192" key="GridCell.Tab.0.right" timestamp="1607218903656">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="109" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607102061402" />
+    <state width="1493" height="192" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607218903656" />
     <state width="1122" height="210" key="GridCell.Tab.1.bottom" timestamp="1607101083659">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -301,10 +284,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1122" height="210" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607101083659" />
-    <state x="438" y="14" key="SettingsEditor" timestamp="1607101919802">
+    <state x="438" y="14" key="SettingsEditor" timestamp="1607102279381">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607101919802" />
+    <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607102279381" />
     <state x="578" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606995980188">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -313,6 +296,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="555" y="60" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1606540407965" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1607214230095">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1607214230095" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/sample$Main.ic" NAME="Main Coverage Results" MODIFIED="1607100635493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

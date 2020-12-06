@@ -20,20 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="Added checkers for beacon">
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/Menu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/Over.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/Over.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Grid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../out/production/MinerGame/sample/Miner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/Grid.java" afterDir="false" />
     </list>
@@ -55,7 +43,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15/lib" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -248,10 +236,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="249" y="7" key="#Project_Structure/0.0.1536.864@0.0.1536.864" timestamp="1606304302812" />
-    <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606912998943">
+    <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607101825976">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1606912998943" />
+    <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1607101825976" />
     <state x="546" y="199" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1606301875254">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -264,22 +252,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607101667443" />
-    <state width="1493" height="109" key="GridCell.Tab.0.bottom" timestamp="1607101616414">
+    <state width="1122" height="146" key="GridCell.Tab.0.bottom" timestamp="1607186020044">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="109" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607101616414" />
-    <state width="1493" height="109" key="GridCell.Tab.0.center" timestamp="1607101616414">
+    <state width="1122" height="146" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607186020044" />
+    <state width="1122" height="146" key="GridCell.Tab.0.center" timestamp="1607186020044">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="109" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607101616414" />
-    <state width="1493" height="109" key="GridCell.Tab.0.left" timestamp="1607101616414">
+    <state width="1122" height="146" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607186020044" />
+    <state width="1122" height="146" key="GridCell.Tab.0.left" timestamp="1607186020044">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="109" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607101616414" />
-    <state width="1493" height="109" key="GridCell.Tab.0.right" timestamp="1607101616414">
+    <state width="1122" height="146" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607186020044" />
+    <state width="1122" height="146" key="GridCell.Tab.0.right" timestamp="1607186020044">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="109" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607101616414" />
+    <state width="1122" height="146" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607186020044" />
     <state width="1122" height="210" key="GridCell.Tab.1.bottom" timestamp="1607101083659">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -296,10 +284,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1122" height="210" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607101083659" />
-    <state x="397" y="14" key="SettingsEditor" timestamp="1607101670579">
+    <state x="438" y="14" key="SettingsEditor" timestamp="1607102279381">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="397" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607101670579" />
+    <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607102279381" />
     <state x="578" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606995980188">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

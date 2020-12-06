@@ -34,6 +34,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
 
+    int smartInd = 0;
+
     Point gold;                 // Coordinate of gold
 
     // Constructor
@@ -223,8 +225,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
-
-
     // adds/removes valid beacon coordinate
     public void addRemBeacon(String strBtn)
     {
@@ -329,17 +329,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void scan()
-    {
-        ArrayList<Integer> tile = grid.scan();
-        switch (tile.get(2)) {
-            case 0 -> System.out.println("Empty");
-            case 1 -> System.out.println("Pit");
-            case 2 -> System.out.println("Beacon");
-            case 3 -> System.out.println("Gold");
-        }
-    }
-
     // Random Intelligence Level
     public void randLvl()
     {
@@ -352,93 +341,193 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move.stop();
     }
 
+    // determines what is in front of the miner up to the edge of the grid
+    // returns a String of additional commands
+    public String scan(int size, String actions)
+    {
+        // initial position of miner
+        int orientation = 0;
+        int x = 0;
+        int y = 0;
+        String add = "";
+        for (int i = 0; i < actions.length(); i++)
+        {
+            if (actions.charAt(i) == 'm' && orientation == 0)
+                y++;
+            else if (actions.charAt(i) == 'm' && orientation == 90)
+                x++;
+            else if (actions.charAt(i) == 'm' && orientation == 180)
+                y--;
+            else if (actions.charAt(i) == 'm' && orientation == 270)
+                x--;
+            else orientation = (orientation + 90) % 360;
+        }
+        // checks if the string of actions is valid
+        if (x >= 0 && x < size && y >= 0 && y < size && !pits.contains(new Point (x, y))) {
+            if (grid.scan(x, y, orientation) == "b") {
+                // move until miner is on the beacon tile
+                /*
+                while (!beacons.contains(new Point (x, y)))
+                {
+                    if (orientation == 0)
+                        y++;
+                    else if (orientation == 90)
+                        x++;
+                    else if (orientation == 180)
+                        y--;
+                    else if (orientation == 270)
+                        x--;
+                    add += 'm';
+                    return add;
+
+                }
+
+                 */
+                //System.out.println("beacon tile: " + "[" + x + ", " + y + "]");
+                // rotate on the beacon tile until scanned is 'g'
+                /*
+                while (grid.scan(x, y, orientation) != "g")
+                {
+                    orientation = (orientation + 90) % 360;
+                    add += 'r';
+                    System.out.println("rotate hi");
+                }
+
+                 */
+            }
+            // move until miner is on the gold tile
+            /*
+            if (grid.scan(x, y, orientation) == "g") {
+                while (!gold.equals(new Point(x, y))) {
+                    if (orientation == 0)
+                        y++;
+                    else if (orientation == 90)
+                        x++;
+                    else if (orientation == 180)
+                        y--;
+                    else if (orientation == 270)
+                        x--;
+                    add += 'm';
+                    System.out.println("gold tile: " + "[" + x + ", " + y + "]");
+                }
+                return add;
+            }
+             */
+        }
+        return "";
+    }
+
+    // determines if next move of miner is valid (used in smart intelligence level)
+    public boolean validMove(int size, String actions)
+    {
+        // initial position of miner
+        int orientation = 0;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < actions.length(); i++)
+        {
+            if (actions.charAt(i) == 'm' && orientation == 0)
+                y++;
+            else if (actions.charAt(i) == 'm' && orientation == 90)
+                x++;
+            else if (actions.charAt(i) == 'm' && orientation == 180)
+                y--;
+            else if (actions.charAt(i) == 'm' && orientation == 270)
+                x--;
+            else orientation = (orientation + 90) % 360;
+        }
+        if (!(x >= 0 && x < size && y >= 0 && y < size))
+            return false;
+        else if (pits.contains(new Point(x, y)))
+            return false;
+        System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+        return true;
+    }
+
+    // determines if gold is found (used in smart intelligence level)
+    public boolean foundGold(String actions)
+    {
+        // initial position of miner
+        int orientation = 0;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < actions.length(); i++)
+        {
+            if (actions.charAt(i) == 'm' && orientation == 0)
+                y++;
+            else if (actions.charAt(i) == 'm' && orientation == 90)
+                x++;
+            else if (actions.charAt(i) == 'm' && orientation == 180)
+                y--;
+            else if (actions.charAt(i) == 'm' && orientation == 270)
+                x--;
+            else orientation = (orientation + 90) % 360;
+        }
+        if (gold.equals(new Point (x, y)))
+            return true;
+        return false;
+    }
+
+    // returns a string of characters that will be the most efficient for the miner (used in smart intelligence level)
+    public String shortestPath()
+    {
+        Queue<String> actions = new ArrayDeque<>(); // used in smartlvl
+        String add = "";                            // used in smartlvl
+        String[] moves = {"m", "r"};                // used in smartlvl
+        String put = "";                            // used in smartlvl
+        String scan = "";
+
+        while (!foundGold(add))
+        {
+            if (!actions.isEmpty())
+                add = actions.remove();
+            if (scan(size, put).length() > 0 )
+            {
+                scan = scan(size, put);
+                if (validMove(size, scan))
+                    actions.add(scan);
+            }
+            else {
+                for (String i : moves)
+                {
+                    put = add + i;
+                    if (validMove(size, put))
+                        actions.add(put);
+                }
+            }
+        }
+        return add;
+    }
+
+    // returns a character in the string of actions to move gui (used in smart intelligence level)
+    public Character smartMove()
+    {
+        String actions = shortestPath();
+
+        Character smartMove = actions.charAt(smartInd);
+        smartInd++;
+
+        return smartMove;
+    }
+
     // Smart Intelligence Level
     public void smartLvl()
     {
-        ImageView miner = grid.miner;
-        int x = GridPane.getRowIndex(miner);
-        int y = GridPane.getColumnIndex(miner);
-        ArrayList<Integer> tile;                    // [x, y, p(1),b(2),g(3)]
-        int orientation = (int) miner.getRotate(); // 0 - right; 90 - down; 180 - left; 360 - up
+        String actions = shortestPath();
 
-        switch (orientation) {
-            case 0 -> { // looking right
-                if (x + 1 <= size)
-                {
-                    tile = grid.scan();
-                    if (tile.get(3) == 1 && x < tile.get(0) - 1)
-                    {
-                        move();
-                        rotate();
-                    }
-                    else if (tile.get(3) == 1)
-                        rotate();
-                    else if (tile.get(3) == 2 && x < tile.get(0))
-                        move();
-                    else if (tile.get(3) == 3 && x < tile.get(0))
-                        move();
-
-                }
-                else rotate();
-            }
-            case 90 -> {
-                if (y + 1 <= size)
-                {
-                    tile = grid.scan();
-                    if (tile.get(3) == 1 && y < tile.get(1) - 1)
-                    {
-                        move();
-                        rotate();
-                    }
-                    else if (tile.get(3) == 1)
-                        rotate();
-                    else if (tile.get(3) == 2 && y < tile.get(1))
-                        move();
-                    else if (tile.get(3) == 3 && y < tile.get(1))
-                        move();
-
-                }
-                else rotate();
-            }
-            case 180 -> {
-                if (x - 1 <= size)
-                {
-                    tile = grid.scan();
-                    if (tile.get(3) == 1 && x > tile.get(0) + 1)
-                    {
-                        move();
-                        rotate();
-                    }
-                    else if (tile.get(3) == 1)
-                        rotate();
-                    else if (tile.get(3) == 2 && x > tile.get(0))
-                        move();
-                    else if (tile.get(3) == 3 && x > tile.get(0))
-                        move();
-
-                }
-                else rotate();
-            }
-            case 270 -> {
-                if (y - 1 <= size)
-                {
-                    tile = grid.scan();
-                    if (tile.get(3) == 1 && y > tile.get(0) + 1)
-                    {
-                        move();
-                        rotate();
-                    }
-                    else if (tile.get(3) == 1)
-                        rotate();
-                    else if (tile.get(3) == 2 && y < tile.get(0))
-                        move();
-                    else if (tile.get(3) == 3 && y < tile.get(0))
-                        move();
-
-                }
-                else rotate();
-            }
+        switch (smartMove())
+        {
+            case 'm' -> move();
+            case 'r' -> rotate();
         }
+
+        if (ifOver() || ifWinner())
+        {
+            System.out.println("Shortest Path: " + actions);
+            move.stop();// end the simulation
+        }
+
+
     }
 
     public void animate()
@@ -449,17 +538,18 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             smartLvl();
     }
 
-    public void execute()
-    {
+    public void execute() {
+        int x = 0;
         // Check if pit/gold is in starting position of miner
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
-        }
-        else if (ifWinner()) {
+        } else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
         }
+        //smartLvl();
+
 
         // Start animation
         move = new Timeline(
@@ -509,7 +599,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Rotate" -> rotate();
                 case "Move" -> move();
                 case "Execute" -> execute();
-                case "Scan" -> scan();
+                //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
+                //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
             }
         }
     }

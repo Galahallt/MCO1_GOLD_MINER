@@ -164,55 +164,43 @@ public class Grid
         updateStats();
     }
 
-    public Point move(int size)
+    public void move(int size)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
-        double rotate = miner.getRotate();
-        double scale = miner.getScaleX();
 
         // move to the right
         if (miner.getRotate() == 0 && x >= 0 && x < size - 1) {
             GridPane.setColumnIndex(miner, x + 1);
-            //y++;
             move++;
         }
         // move to the left
         else if (miner.getRotate() == 180 && x > 0 && x <= size) {
             GridPane.setColumnIndex(miner, x - 1);
-            //y--;
             move++;
         }
         // move down
         else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
-            //x++;
             move++;
+
         }
         // move up
         else if (miner.getRotate() == 270 && y > 0 && y <= size) {
             GridPane.setRowIndex(miner, y - 1);
-            //x--;
             move++;
         }
         else System.out.println("Miner moves out of bounds!");
 
         updateStats();
-
         //System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
-
-        return (new Point(x, y));
     }
 
     // 0empty, 1pit, 2beacon, 3gold
-    public ArrayList<Integer> scan() {
-        int orientation = (int) miner.getRotate();
+    public String scan(int x, int y, int orientation) {
         Point p;
         scan++;
         updateStats();
-
-        int x = GridPane.getRowIndex(miner);
-        int y = GridPane.getColumnIndex(miner);
 
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -221,114 +209,55 @@ public class Grid
                 for (int i = y; i < size; i++) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(1);
-                        return result;
-                    }
-
+                        return "p";
                     else if (beacons.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(2);
-                        return result;
-                    }
+                        return "b";
+
                     else if (goldPot.equals(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(3);
-                        return result;
-                    }
+                        return "g";
                 }
 
-                return result;
+                return "null";
             }
             case 90 -> {    // Looking Down
                 for (int i = x; i < size; i++) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(1);
-                        return result;
-                    }
+                        return "p";
                     else if (beacons.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(2);
-                        return result;
-                    }
+                        return "b";
                     else if (goldPot.equals(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(3);
-                        return result;
-                    }
+                        return "g";
                 }
-                return result;
+                return "null";
             }
             case 180 -> {    // Looking Left
                 for (int i = y; i >= 0; i--) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(1);
-                        return result;
-                    }
-                    else if (beacons.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(2);
-                        return result;
-                    }
-                    else if (goldPot.equals(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(3);
-                        return result;
-                    }
+                        if (pits.contains(p))
+                            return "p";
+                        else if (beacons.contains(p))
+                            return "b";
+                        else if (goldPot.equals(p))
+                            return "g";
                 }
-                return result;
+                return "null";
             }
             case 270 -> {    // Looking Up
                 for (int i = x; i >= 0; i--) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(1);
-                        return result;
-                    }
+                        return "p";
                     else if (beacons.contains(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(2);
-                        return result;
-                    }
+                        return "b";
                     else if (goldPot.equals(p))
-                    {
-                        result.add((int) p.getX());
-                        result.add((int) p.getY());
-                        result.add(3);
-                        return result;
-                    }
+                        return "g";
                 }
-                return result;
+                return "null";
             }
         }
-        return result;
+        return "null";
     }
 
     // Allows events of listed objects to be handled
