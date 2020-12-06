@@ -366,7 +366,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (x >= 0 && x < size && y >= 0 && y < size && !pits.contains(new Point (x, y))) {
             if (grid.scan(x, y, orientation) == "b") {
                 // move until miner is on the beacon tile
-                /*
                 while (!beacons.contains(new Point (x, y)))
                 {
                     if (orientation == 0)
@@ -378,25 +377,20 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     else if (orientation == 270)
                         x--;
                     add += 'm';
-                    return add;
-
+                    //System.out.println("beacon tile: " + "[" + x + ", " + y + "]");
                 }
 
-                 */
                 //System.out.println("beacon tile: " + "[" + x + ", " + y + "]");
                 // rotate on the beacon tile until scanned is 'g'
-                /*
                 while (grid.scan(x, y, orientation) != "g")
                 {
                     orientation = (orientation + 90) % 360;
                     add += 'r';
-                    System.out.println("rotate hi");
+                    //System.out.println("OR: " + orientation);
+                    //System.out.println(grid.scan(x, y, orientation));
                 }
-
-                 */
             }
             // move until miner is on the gold tile
-            /*
             if (grid.scan(x, y, orientation) == "g") {
                 while (!gold.equals(new Point(x, y))) {
                     if (orientation == 0)
@@ -408,13 +402,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     else if (orientation == 270)
                         x--;
                     add += 'm';
-                    System.out.println("gold tile: " + "[" + x + ", " + y + "]");
+                    //System.out.println("gold tile: " + "[" + x + ", " + y + "]");
                 }
                 return add;
             }
-             */
         }
-        return "";
+        return "" + add;
     }
 
     // determines if next move of miner is valid (used in smart intelligence level)
