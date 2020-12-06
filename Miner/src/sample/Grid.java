@@ -9,11 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -28,7 +28,9 @@ public class Grid
     private int size;
     private int move;
     private int rotation;
-    private int scan;
+    public int scan;
+
+    Controller cont;
 
     GridPane grid = new GridPane();
 
@@ -51,6 +53,17 @@ public class Grid
         this.pits = pits;
         this.beacons = beacons;
         this.goldPot = goldPot;
+
+        // Background
+        javafx.scene.image.Image image = new Image("sample/Cave.jpg", true);
+        BackgroundImage bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true, false, false)
+        );
+        grid.setBackground(new Background(bgImage));
 
         //Debug code
         GridPane.setConstraints(btnScan, 0, 1);
@@ -121,8 +134,12 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("Stats:\nMoves:\t\t" + move + "\nRotations:\t" + rotation + "\nScans:\t\t" + scan + "\n");
+        lblStats = new Label("Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
+        lblStats.setPrefHeight(80);
+        lblStats.setPrefWidth(150);
+        lblStats.setFont(new Font(13));
         lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
+        lblStats.setStyle("-fx-background-color: white;");
         grid.add(lblStats, 0, 0);
 
         //for row 1
@@ -149,7 +166,7 @@ public class Grid
 
     public void updateStats()
     {
-        lblStats.setText("Stats:\nMoves:\t\t" + move + "\nRotations:\t" + rotation + "\nScans:\t\t" + scan + "\n");
+        lblStats.setText("Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
     }
 
     public void rotate()
@@ -199,7 +216,8 @@ public class Grid
     // 0empty, 1pit, 2beacon, 3gold
     public String scan(int x, int y, int orientation) {
         Point p;
-        scan++;
+        if (cont.random)
+            scan++;
         updateStats();
 
         ArrayList<Integer> result = new ArrayList<>();
@@ -268,5 +286,7 @@ public class Grid
 
         btnMove.setOnAction((EventHandler) cont);
         btnAuto.setOnAction((EventHandler) cont);
+
+        this.cont = cont;
     }
 }

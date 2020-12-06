@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 public class Menu
 {
@@ -44,11 +44,21 @@ public class Menu
     public Scene buildMenu()
     {
         GridPane grid = new GridPane();
-        grid.setStyle("-fx-background-image: url('sample/Cave.jpg');-fx-background-size: cover;");
         grid.setPadding(new Insets(10, 10, 10, 10));
 
         grid.setVgap(8);
         grid.setHgap(10);
+
+        // Background
+        Image image = new Image("sample/Cave.jpg", true);
+        BackgroundImage bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true, false, false)
+        );
+        grid.setBackground(new Background(bgImage));
 
         //Intelligence level label
         Label lblInt = new Label("Intelligence Level:");
@@ -84,6 +94,7 @@ public class Menu
 
         // Set Grid button
         btnSize = new Button("Set Size");
+        btnSize.setDisable(true);
         GridPane.setConstraints(btnSize, 2, 1);
 
         //Pits label

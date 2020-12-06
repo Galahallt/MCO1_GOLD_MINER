@@ -24,12 +24,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private final Winner winner;      // Winner layout
 
     private int size;           // Grid size
-    private boolean random;     // Intelligence level: Random-true, Smart-false
+    public boolean random;     // Intelligence level: Random-true, Smart-false
 
     private boolean sizeSet;    // Is grid size final?
     private boolean goldSet;    // is gold coordinate final?
 
     private Timeline move;
+
+    private String flow = null;
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
@@ -164,7 +166,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    //Update View for pit
+    // Update View for pit
     public void updatePitView() {
         if (pits.size() > 0) {      // Prevents index out of bounds when pit is empty
             String display = "";
@@ -175,7 +177,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         else
             menu.taPit.clear();
     }
-    //checks the tiles in between the beacon and gold along the x-coordinate
+    // Checks the tiles in between the beacon and gold along the x-coordinate
     public boolean checkBetweenBGX(Point p)
     {
         Point temp;
@@ -200,7 +202,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
-    //checks the tiles in between the beacon and gold along the y-coordinate
+    // Checks the tiles in between the beacon and gold along the y-coordinate
     public boolean checkBetweenBGY(Point p)
     {
         Point temp;
@@ -225,7 +227,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
-    // adds/removes valid beacon coordinate
+    // Adds/removes valid beacon coordinate
     public void addRemBeacon(String strBtn)
     {
         try {
@@ -314,6 +316,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void rotate()
     {
         grid.rotate();
+        if (!random) {
+            Timeline delay = new Timeline(
+                    new KeyFrame(
+                            Duration.millis(400), event -> grid.scan++
+                    )
+            );
+            delay.setCycleCount(1);
+            delay.play();
+        }
     }
 
     // Display credits if game is finished
@@ -342,14 +353,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         credits();
 
         Random rand = new Random();
-        switch (rand.nextInt(2)) {
+        switch (rand.nextInt(3)) {
             case 0 -> rotate();
             case 1 -> move();
+            case 2 -> grid.scan(0, 0, 0);
         }
     }
 
-    // determines what is in front of the miner up to the edge of the grid
-    // returns a String of additional commands
+    // Determines what is in front of the miner up to the edge of the grid
+    // Returns a String of additional commands
     public String scan(int size, String actions)
     {
         // initial position of miner
@@ -369,7 +381,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 x--;
             else orientation = (orientation + 90) % 360;
         }
-        // checks if the string of actions is valid
+        // Checks if the string of actions is valid
         if (x >= 0 && x < size && y >= 0 && y < size && !pits.contains(new Point (x, y))) {
             if (grid.scan(x, y, orientation) == "b") {
                 // move until miner is on the beacon tile
@@ -417,7 +429,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return "" + add;
     }
 
-    // determines if next move of miner is valid (used in smart intelligence level)
+    // Determines if next move of miner is valid (used in smart intelligence level)
     public boolean validMove(int size, String actions)
     {
         // initial position of miner
@@ -444,7 +456,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return true;
     }
 
-    // determines if gold is found (used in smart intelligence level)
+    // Determines if gold is found (used in smart intelligence level)
     public boolean foundGold(String actions)
     {
         // initial position of miner
@@ -468,7 +480,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return false;
     }
 
-    // returns a string of characters that will be the most efficient for the miner (used in smart intelligence level)
+    // Returns a string of characters that will be the most efficient for the miner (used in smart intelligence level)
     public String shortestPath()
     {
         Queue<String> actions = new ArrayDeque<>(); // used in smartlvl
@@ -499,12 +511,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return add;
     }
 
-    // returns a character in the string of actions to move gui (used in smart intelligence level)
+    // Returns a character in the string of actions to move gui (used in smart intelligence level)
     public Character smartMove()
     {
-        String actions = shortestPath();
+        if (flow == null)
+            flow = shortestPath();
 
-        Character smartMove = actions.charAt(smartInd);
+        Character smartMove = flow.charAt(smartInd);
         smartInd++;
 
         return smartMove;
@@ -514,12 +527,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void smartLvl()
     {
         credits();
-        String actions = shortestPath();
 
-        switch (smartMove())
-        {
-            case 'm' -> move();
-            case 'r' -> rotate();
+        if (!ifOver() && !ifWinner()) {
+            switch (smartMove()) {
+                case 'm' -> move();
+                case 'r' -> rotate();
+            }
         }
     }
 
