@@ -206,7 +206,7 @@ public class Grid
 
         switch (orientation) {
             case 0 -> {     // Looking Right
-                for (int i = y; i < size; i++) {
+                for (int i = y + 1; i < size; i++) {
                     p = new Point(x, i);
                     if (pits.contains(p))
                         return "p";
@@ -220,7 +220,7 @@ public class Grid
                 return "null";
             }
             case 90 -> {    // Looking Down
-                for (int i = x; i < size; i++) {
+                for (int i = x + 1; i < size; i++) {
                     p = new Point(i, y);
                     if (pits.contains(p))
                         return "p";
@@ -232,7 +232,7 @@ public class Grid
                 return "null";
             }
             case 180 -> {    // Looking Left
-                for (int i = y; i >= 0; i--) {
+                for (int i = y - 1; i >= 0; i--) {
                     p = new Point(x, i);
                     if (pits.contains(p))
                         if (pits.contains(p))
@@ -245,7 +245,7 @@ public class Grid
                 return "null";
             }
             case 270 -> {    // Looking Up
-                for (int i = x; i >= 0; i--) {
+                for (int i = x - 1; i >= 0; i--) {
                     p = new Point(i, y);
                     if (pits.contains(p))
                         return "p";
