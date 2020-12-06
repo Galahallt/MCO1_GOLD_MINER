@@ -164,107 +164,100 @@ public class Grid
         updateStats();
     }
 
-    public Point move(int size)
+    public void move(int size)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
-        double rotate = miner.getRotate();
-        double scale = miner.getScaleX();
 
         // move to the right
         if (miner.getRotate() == 0 && x >= 0 && x < size - 1) {
             GridPane.setColumnIndex(miner, x + 1);
-            //y++;
             move++;
         }
         // move to the left
         else if (miner.getRotate() == 180 && x > 0 && x <= size) {
             GridPane.setColumnIndex(miner, x - 1);
-            //y--;
             move++;
         }
         // move down
         else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
-            //x++;
             move++;
+
         }
         // move up
         else if (miner.getRotate() == 270 && y > 0 && y <= size) {
             GridPane.setRowIndex(miner, y - 1);
-            //x--;
             move++;
         }
         else System.out.println("Miner moves out of bounds!");
 
         updateStats();
-
         //System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
-
-        return (new Point(x, y));
     }
 
     // 0empty, 1pit, 2beacon, 3gold
-    public int scan() {
-        int orientation = (int) miner.getRotate();
+    public String scan(int x, int y, int orientation) {
         Point p;
         scan++;
         updateStats();
 
-        int x = GridPane.getRowIndex(miner);
-        int y = GridPane.getColumnIndex(miner);
+        ArrayList<Integer> result = new ArrayList<>();
 
         switch (orientation) {
             case 0 -> {     // Looking Right
                 for (int i = y; i < size; i++) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                        return 1;
+                        return "p";
                     else if (beacons.contains(p))
-                        return 2;
+                        return "b";
+
                     else if (goldPot.equals(p))
-                        return 3;
+                        return "g";
                 }
-                return 0;
+
+                return "null";
             }
             case 90 -> {    // Looking Down
                 for (int i = x; i < size; i++) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                        return 1;
+                        return "p";
                     else if (beacons.contains(p))
-                        return 2;
+                        return "b";
                     else if (goldPot.equals(p))
-                        return 3;
+                        return "g";
                 }
-                return 0;
+                return "null";
             }
             case 180 -> {    // Looking Left
                 for (int i = y; i >= 0; i--) {
                     p = new Point(x, i);
                     if (pits.contains(p))
-                        return 1;
-                    else if (beacons.contains(p))
-                        return 2;
-                    else if (goldPot.equals(p))
-                        return 3;
+                        if (pits.contains(p))
+                            return "p";
+                        else if (beacons.contains(p))
+                            return "b";
+                        else if (goldPot.equals(p))
+                            return "g";
                 }
-                return 0;
+                return "null";
             }
             case 270 -> {    // Looking Up
                 for (int i = x; i >= 0; i--) {
                     p = new Point(i, y);
                     if (pits.contains(p))
-                        return 1;
+                        return "p";
                     else if (beacons.contains(p))
-                        return 2;
+                        return "b";
                     else if (goldPot.equals(p))
-                        return 3;
+                        return "g";
                 }
-                return 0;
+                return "null";
             }
         }
-        return -1;  // Angle of miner is not divisible by 90
+        return "null";
     }
 
     // Allows events of listed objects to be handled
