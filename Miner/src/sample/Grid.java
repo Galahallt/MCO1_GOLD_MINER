@@ -134,10 +134,10 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
+        lblStats = new Label("  Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
         lblStats.setPrefHeight(80);
         lblStats.setPrefWidth(150);
-        lblStats.setFont(new Font(13));
+        lblStats.setFont(new Font("Trebuchet MS", 13));
         lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
         lblStats.setStyle("-fx-background-color: white;");
         grid.add(lblStats, 0, 0);
@@ -166,7 +166,7 @@ public class Grid
 
     public void updateStats()
     {
-        lblStats.setText("Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
+        lblStats.setText("  Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:   " + rotation + "\n\tScans:\t   " + scan + "\n");
     }
 
     public void rotate()
