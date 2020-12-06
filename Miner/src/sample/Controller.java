@@ -252,6 +252,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 if (!pits.contains(p) && !beacons.contains(p)
                         && (p.getX() >= 0 && p.getX() < size)
                         && (p.getY() >= 0 && p.getY() < size)
+                        && (p.getX() == gold.getX() && p.getY() == gold.getY())
                         && !p.equals(gold) && !obstruction)
                     beacons.add(p);
                 else
