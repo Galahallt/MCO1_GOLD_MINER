@@ -1,6 +1,6 @@
 package sample;
 
-import javafx.event.*;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
