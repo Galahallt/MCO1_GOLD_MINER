@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+import static javafx.scene.paint.Color.WHITE;
+
 public class Menu
 {
     public RadioButton rbIntRand;
@@ -96,6 +98,8 @@ public class Menu
         btnSize = new Button("Set Size");
         btnSize.setDisable(true);
         GridPane.setConstraints(btnSize, 2, 1);
+        btnSize.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnSize.setTextFill(WHITE);
 
         //Pits label
         Label lblPit = new Label("Pits");
@@ -113,12 +117,16 @@ public class Menu
         btnPitAdd = new Button("Add Pit");
         GridPane.setConstraints(btnPitAdd, 0, 5);
         btnPitAdd.setDisable(true);
+        btnPitAdd.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnPitAdd.setTextFill(WHITE);
 
         //Pit Remove Coordinate Button
         btnPitRem = new Button ("Remove Pit");
         GridPane.setConstraints(btnPitRem, 0, 5);
         GridPane.setHalignment(btnPitRem, HPos.RIGHT);
         btnPitRem.setDisable(true);
+        btnPitRem.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnPitRem.setTextFill(WHITE);
 
         //Pit Coordinates Label
         Label lblPitXY = new Label("Pit Coordinates:");
@@ -131,6 +139,8 @@ public class Menu
         GridPane.setConstraints(btnPitSet, 0, 6);
         GridPane.setHalignment(btnPitSet, HPos.RIGHT);
         btnPitSet.setDisable(true);
+        btnPitSet.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnPitSet.setTextFill(WHITE);
 
         //Pit Text Area Coordinates
         taPit = new TextArea();
@@ -154,12 +164,16 @@ public class Menu
         btnBeaconAdd = new Button("Add Beacon");
         GridPane.setConstraints(btnBeaconAdd, 1, 5);
         btnBeaconAdd.setDisable(true);
+        btnBeaconAdd.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnBeaconAdd.setTextFill(WHITE);
 
         //Beacon Remove Coordinate Button
         btnBeaconRem = new Button ("Remove Beacon");
         GridPane.setConstraints(btnBeaconRem, 1, 5);
         GridPane.setHalignment(btnBeaconRem, HPos.RIGHT);
         btnBeaconRem.setDisable(true);
+        btnBeaconRem.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnBeaconRem.setTextFill(WHITE);
 
         //Beacon Coordinates Label
         Label lblBeaconXY = new Label("Beacon Coordinates:");
@@ -172,6 +186,8 @@ public class Menu
         GridPane.setConstraints(btnBeaconSet, 1, 6);
         GridPane.setHalignment(btnBeaconSet, HPos.RIGHT);
         btnBeaconSet.setDisable(true);
+        btnBeaconSet.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnBeaconSet.setTextFill(WHITE);
 
         //Beacon Text Area Coordinates
         taBeacon = new TextArea();
@@ -195,12 +211,17 @@ public class Menu
         btnGold = new Button("Set Gold");
         GridPane.setConstraints(btnGold, 2, 2);
         btnGold.setDisable(true);
+        btnGold.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnGold.setTextFill(WHITE);
 
         //Start Button
         btnStart = new Button("START!");
         GridPane.setConstraints(btnStart, 2, 7);
         btnStart.setPrefSize(150, 75);
         btnStart.setDisable(true);
+        btnStart.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnStart.setTextFill(WHITE);
+
         GridPane.setHalignment(btnStart, HPos.CENTER);
 
         grid.getChildren().addAll(lblGrid, tfGrid, btnSize, lblInt, rbIntRand,
