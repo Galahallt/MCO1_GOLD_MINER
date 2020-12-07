@@ -19,11 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
+
     <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="GraphicDesignIsMyPassion">
       <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.java" afterDir="false" />
     </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -227,7 +229,21 @@
       <option name="project" value="LOCAL" />
       <updated>1607252361545</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="GraphicDesignIsMyPassion2">
+      <created>1607252703738</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1607252703738</updated>
+    </task>
+    <task id="LOCAL-00008" summary="GraphicDesignIsMyPassion3">
+      <created>1607252846346</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1607252846346</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -248,7 +264,9 @@
     <MESSAGE value="Added checkers for beacon" />
     <MESSAGE value="Graphics n shit" />
     <MESSAGE value="GraphicDesignIsMyPassion" />
-    <option name="LAST_COMMIT_MESSAGE" value="GraphicDesignIsMyPassion" />
+    <MESSAGE value="GraphicDesignIsMyPassion2" />
+    <MESSAGE value="GraphicDesignIsMyPassion3" />
+    <option name="LAST_COMMIT_MESSAGE" value="GraphicDesignIsMyPassion3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="7" key="#Project_Structure" timestamp="1606304302812">
@@ -273,7 +291,10 @@
     </state>
     <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607253427451" />
     <state x="776" y="241" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607241185219" />
-    <state width="1122" height="91" key="GridCell.Tab.0.bottom" timestamp="1607315931904">
+
+
+    <state width="1122" height="91" key="GridCell.Tab.0.bottom" timestamp="1607276435163">
+
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1122" height="91" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607315931904" />
