@@ -16,7 +16,7 @@ public class Winner
         grid.setHgap(10);
 
         // Background
-        Image image = new Image("sample/Cave.jpg", true);
+        Image image = new Image("sample/Winner.gif", true);
         BackgroundImage bgImage = new BackgroundImage(
                 image,
                 BackgroundRepeat.NO_REPEAT,

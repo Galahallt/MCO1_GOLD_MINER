@@ -596,6 +596,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
+    public void retry()
+    {
+        Menu next = new Menu();
+
+        window.setScene(next.buildMenu());
+        new Controller(next, window);
+        window.show();
+    }
+
     // Handles events
     @Override
     public void handle(Event e)
@@ -632,7 +641,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Rotate" -> rotate();
                 case "Move" -> move();
                 case "Execute" -> execute();
-                case "RETRY" -> window.setScene(menu.buildMenu());
+                case "RETRY" -> retry();
                 //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
                 //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
             }
