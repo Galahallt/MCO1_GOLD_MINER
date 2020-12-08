@@ -20,6 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
@@ -36,7 +37,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private boolean goldSet;    // is gold coordinate final?
     private boolean noSol = false;
 
-    private Timeline move;
+    public Timeline move;
 
     private String flow = null;
 
@@ -62,10 +63,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         sizeSet = false;
         goldSet = false;
 
-
         grid.setEventHandlers(this);
         menu.setEventHandlers(this);
         over.setEventHandlers(this);
+        winner.setEventHandlers(this);
     }
 
     // Switches from menu window to grid window
@@ -325,16 +326,29 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         return gold.equals(p);
     }
 
+    public void smartScan()
+    {
+        grid.scan++;
+        grid.updateStats();
+        Timeline delay = new Timeline(
+                new KeyFrame(
+                        Duration.millis(400), event -> move.play()
+                )
+        );
+        delay.play();
+    }
+
     public void rotate()
     {
         grid.rotate();
+
         if (!random) {
+            move.pause();
             Timeline delay = new Timeline(
                     new KeyFrame(
-                            Duration.millis(400), event -> grid.scan++
+                            Duration.millis(400), event -> smartScan()
                     )
             );
-            delay.setCycleCount(1);
             delay.play();
         }
     }
@@ -554,7 +568,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void execute() throws IOException {
+    public void execute() {
         // Check if pit/gold is in starting position of miner
         if (ifOver() || ifWinner()) {
             move = new Timeline(
@@ -590,7 +604,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
         // Smart Intelligence
         else {
-            move = new Timeline(
+            grid.scan++;
+            grid.updateStats();
+            move = new Timeline(new KeyFrame(Duration.millis(400)),
                     new KeyFrame(
                             Duration.millis(400), event -> {
                         try {
@@ -604,8 +620,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move.setCycleCount(Animation.INDEFINITE);
             move.play();
         }
-
-
     }
 
     public void retry()

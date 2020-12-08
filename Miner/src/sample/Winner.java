@@ -1,20 +1,24 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+
+import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.WHITE;
 
 public class Winner
 {
+    Button btnRetry = new Button ("RETRY");;
+
     public Scene buildWinner()
     {
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-
-        grid.setVgap(8);
-        grid.setHgap(10);
-
+        AnchorPane anchor = new AnchorPane();
+        anchor.setPrefSize(800, 600);
         // Background
         Image image = new Image("sample/Winner.gif", true);
         BackgroundImage bgImage = new BackgroundImage(
@@ -24,11 +28,23 @@ public class Winner
                 BackgroundPosition.DEFAULT,
                 new BackgroundSize(1.0, 1.0, true, true, false, false)
         );
-        grid.setBackground(new Background(bgImage));
+        anchor.setBackground(new Background(bgImage));
 
-        Scene scene = new Scene(grid, 600, 500);
-        grid.requestFocus();
+        btnRetry.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center; -fx-border-color: BLACK; -fx-border-width: 4;" +
+                "    -fx-stroke-width: 1;");
+        btnRetry.setTextFill(WHITE);
+        btnRetry.setPrefSize(200, 60);
+        btnRetry.setFont(new Font("Cooper Black", 36));
+        btnRetry.setLayoutX(300);
+        btnRetry.setLayoutY(340);
 
-        return scene;
+        anchor.getChildren().add(btnRetry);
+
+        return new Scene(anchor, 800, 600);
+    }
+
+    public void setEventHandlers(Controller cont)
+    {
+        btnRetry.setOnAction((EventHandler) cont);
     }
 }

@@ -32,7 +32,7 @@ public class Over
         );
         anchor.setBackground(new Background(bgImage));
 
-        btnRetry.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center;");
+        btnRetry.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center; -fx-border-color: BLACK; -fx-border-width: 4;");
         btnRetry.setTextFill(WHITE);
         btnRetry.setPrefSize(200, 71);
         btnRetry.setFont(new Font("Cooper Black", 36));
@@ -41,9 +41,7 @@ public class Over
 
         anchor.getChildren().add(btnRetry);
 
-        Scene scene = new Scene(anchor, 800, 600);
-
-        return scene;
+        return new Scene(anchor, 800, 600);
     }
 
     public void setEventHandlers(Controller cont)
