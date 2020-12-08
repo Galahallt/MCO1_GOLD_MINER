@@ -32,10 +32,7 @@ public class Grid
     GridPane grid = new GridPane();
 
     //Debug Miner moves
-    Button btnRotate = new Button("Rotate");
-    Button btnMove = new Button("Move");
     Button btnAuto = new Button("Execute");
-    Button btnScan = new Button("Scan");
 
     Label lblStats;
 
@@ -63,18 +60,9 @@ public class Grid
         grid.setBackground(new Background(bgImage));
 
         //Debug code
-        GridPane.setConstraints(btnScan, 0, 1);
-        GridPane.setHalignment(btnScan, HPos.LEFT);
-
-        GridPane.setConstraints(btnRotate, 0, 1);
-        GridPane.setHalignment(btnRotate, HPos.CENTER);
-
-        GridPane.setConstraints(btnAuto, 0, 1);
-        GridPane.setHalignment(btnAuto, HPos.RIGHT);
-
-        GridPane.setConstraints(btnMove, 1, 1);
-        GridPane.setHalignment(btnMove, HPos.CENTER);
-        grid.getChildren().addAll(btnScan, btnRotate, btnMove, btnAuto);
+        GridPane.setConstraints(btnAuto, 1, 1);
+        GridPane.setHalignment(btnAuto, HPos.CENTER);
+        grid.getChildren().addAll(btnAuto);
 
         GridPane gridBoard = new GridPane();
         ScrollPane scroll = new ScrollPane(gridBoard);
@@ -178,7 +166,7 @@ public class Grid
         updateStats();
     }
 
-    public void move(int size)
+    public void move(int size, Controller cont)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
@@ -197,7 +185,6 @@ public class Grid
         else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
             move++;
-
         }
         // move up
         else if (miner.getRotate() == 270 && y > 0 && y <= size) {
@@ -278,10 +265,6 @@ public class Grid
     // Allows events of listed objects to be handled
     public void setEventHandlers(Controller cont)
     {
-        btnScan.setOnAction((EventHandler) cont);
-        btnRotate.setOnAction((EventHandler) cont);
-
-        btnMove.setOnAction((EventHandler) cont);
         btnAuto.setOnAction((EventHandler) cont);
 
         this.cont = cont;

@@ -19,13 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-
-    <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="GraphicDesignIsMyPassion">
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="NoSol">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Over.java" beforeDir="false" afterPath="$PROJECT_DIR$/Over.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winner.java" beforeDir="false" afterPath="$PROJECT_DIR$/Winner.java" afterDir="false" />
     </list>
-
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,70 +47,12 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15/lib" />
+    <property name="last_opened_file_path" value="D:/javafx-sdk-15/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="14" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
-      <module name="Miner" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-15\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../.." />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="sample" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="sample" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="sample" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -174,6 +116,64 @@
       <option name="_new_target" value="&quot;&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="14" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <module name="Miner" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;D:\javafx-sdk-15\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../.." />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="sample" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="sample" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
   </component>
   <component name="SvnConfiguration">
@@ -243,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607252846346</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="NoSol">
+      <created>1607422422625</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607422422625</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -266,18 +273,19 @@
     <MESSAGE value="GraphicDesignIsMyPassion" />
     <MESSAGE value="GraphicDesignIsMyPassion2" />
     <MESSAGE value="GraphicDesignIsMyPassion3" />
-    <option name="LAST_COMMIT_MESSAGE" value="GraphicDesignIsMyPassion3" />
+    <MESSAGE value="NoSol" />
+    <option name="LAST_COMMIT_MESSAGE" value="NoSol" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="7" key="#Project_Structure" timestamp="1606304302812">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="249" y="7" key="#Project_Structure/0.0.1536.864@0.0.1536.864" timestamp="1606304302812" />
-    <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607253476310">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="350" y="102" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607406827796">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="280" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1607253476310" />
-    <state x="350" y="102" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607241197207" />
+    <state x="350" y="102" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607406827796" />
     <state x="546" y="199" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1606301875254">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -286,34 +294,31 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="596" y="261" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.864@0.0.1536.864" timestamp="1606304466130" />
-    <state x="621" y="200" key="FileChooserDialogImpl" timestamp="1607253427451">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="776" y="241" key="FileChooserDialogImpl" timestamp="1607406814395">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607253427451" />
-    <state x="776" y="241" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607241185219" />
-
-
-    <state width="1122" height="91" key="GridCell.Tab.0.bottom" timestamp="1607276435163">
-
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="776" y="241" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607406814395" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1607433043362">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1122" height="91" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607315931904" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607252179699" />
-    <state width="1122" height="91" key="GridCell.Tab.0.center" timestamp="1607315931904">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607433043362" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1607433043362">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1122" height="91" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607315931904" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607252179699" />
-    <state width="1122" height="91" key="GridCell.Tab.0.left" timestamp="1607315931904">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607433043362" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1607433043362">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1122" height="91" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607315931904" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607252179699" />
-    <state width="1122" height="91" key="GridCell.Tab.0.right" timestamp="1607315931904">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607433043362" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1607433043362">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1122" height="91" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607315931904" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607252179699" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607433043362" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1607247793824">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -334,11 +339,11 @@
     </state>
     <state width="1122" height="245" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607240050799" />
     <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607247793824" />
-    <state x="438" y="14" key="SettingsEditor" timestamp="1607253430885">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="548" y="17" key="SettingsEditor" timestamp="1607406817160">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607253430885" />
-    <state x="548" y="17" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607241187263" />
+    <state x="548" y="17" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607406817160" />
     <state x="772" y="334" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1607241176317">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
