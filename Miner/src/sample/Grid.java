@@ -178,7 +178,7 @@ public class Grid
         updateStats();
     }
 
-    public void move(int size)
+    public void move(int size, Controller cont)
     {
         int x = GridPane.getColumnIndex(miner);
         int y = GridPane.getRowIndex(miner);
@@ -197,7 +197,6 @@ public class Grid
         else if (miner.getRotate() == 90 && y >= 0 && y < size - 1) {
             GridPane.setRowIndex(miner, y + 1);
             move++;
-
         }
         // move up
         else if (miner.getRotate() == 270 && y > 0 && y <= size) {

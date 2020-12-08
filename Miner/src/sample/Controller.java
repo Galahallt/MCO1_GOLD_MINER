@@ -34,14 +34,15 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     private boolean sizeSet;    // Is grid size final?
     private boolean goldSet;    // is gold coordinate final?
+    private boolean noSol = false;
 
     private Timeline move;
-    private Timeline display;
 
     private String flow = null;
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
+    ArrayList<Point> tiles = new ArrayList<>();
 
     int smartInd = 0;
 
@@ -352,9 +353,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void move()
+    public boolean foundPit(int x, int y)
     {
-        grid.move(size);
+        return pits.contains(new Point(x, y));
+    }
+
+    public void move() throws IOException {
+        grid.move(size, this);
     }
 
     // Random Intelligence Level
@@ -457,11 +462,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 x--;
             else orientation = (orientation + 90) % 360;
         }
+        Point p = new Point(x, y);
         if (!(x >= 0 && x < size && y >= 0 && y < size))
             return false;
-        else if (pits.contains(new Point(x, y)))
+        else if (pits.contains(new Point(x, y)) && !tiles.contains(p)) {
+            tiles.add(p);
             return false;
-        System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+        }
+        //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
         return true;
     }
 
@@ -484,8 +492,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 x--;
             else orientation = (orientation + 90) % 360;
         }
-        if (gold.equals(new Point (x, y)))
+        if (gold.equals(new Point (x, y))) {
+            System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
             return true;
+        }
         return false;
     }
 
@@ -544,7 +554,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void execute() {
+    public void execute() throws IOException {
         // Check if pit/gold is in starting position of miner
         if (ifOver() || ifWinner()) {
             move = new Timeline(
@@ -594,6 +604,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move.setCycleCount(Animation.INDEFINITE);
             move.play();
         }
+
+
     }
 
     public void retry()
@@ -611,13 +623,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     {
         if (e.getSource() instanceof Button)    // If a button is pushed
         {
-            handle((ActionEvent) e);
+            try {
+                handle((ActionEvent) e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
         else
             System.out.println("Event");
     }
 
-    public void handle(ActionEvent e) {
+    public void handle(ActionEvent e) throws IOException {
         String strButton;
 
         if (e.getSource() instanceof Button) {
@@ -640,7 +656,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Set Beacons" -> setBeacons();
                 case "Rotate" -> rotate();
                 case "Move" -> move();
-                case "Execute" -> execute();
+                case "Execute" -> {
+                    execute();
+                }
                 case "RETRY" -> retry();
                 //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
                 //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
