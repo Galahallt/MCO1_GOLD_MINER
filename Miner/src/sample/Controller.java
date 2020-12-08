@@ -371,7 +371,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     // Determines what is in front of the miner up to the edge of the grid
     // Returns a String of additional commands
-    public String scan(int size, String actions)
+    public String scan(String actions)
     {
         // initial position of miner
         int orientation = 0;
@@ -439,7 +439,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Determines if next move of miner is valid (used in smart intelligence level)
-    public boolean validMove(int size, String actions)
+    public boolean validMove(String actions)
     {
         // initial position of miner
         int orientation = 0;
@@ -472,18 +472,27 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         int orientation = 0;
         int x = 0;
         int y = 0;
+        int r = 0;
         for (int i = 0; i < actions.length(); i++)
         {
             if (actions.charAt(i) == 'm' && orientation == 0)
+            {
                 y++;
+            }
+
             else if (actions.charAt(i) == 'm' && orientation == 90)
                 x++;
             else if (actions.charAt(i) == 'm' && orientation == 180)
                 y--;
             else if (actions.charAt(i) == 'm' && orientation == 270)
                 x--;
-            else orientation = (orientation + 90) % 360;
+            else
+            {
+                orientation = (orientation + 90) % 360;
+                //r += 1;
+            }
         }
+        System.out.println("actions: " + actions);
         if (gold.equals(new Point (x, y)))
             return true;
         return false;
@@ -502,17 +511,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         {
             if (!actions.isEmpty())
                 add = actions.remove();
-            if (scan(size, put).length() > 0)
+            if (scan(put).length() > 0)
             {
-                scan = put + scan(size, put);
-                if (validMove(size, scan))
+                scan = put + scan(put);
+                if (validMove(scan))
                     actions.add(scan);
             }
             else {
                 for (String i : moves)
                 {
                     put = add + i;
-                    if (validMove(size, put))
+                    if (validMove(put))
                         actions.add(put);
                 }
             }
