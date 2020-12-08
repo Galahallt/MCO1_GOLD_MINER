@@ -49,6 +49,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     Point gold;                 // Coordinate of gold
 
+    @FXML Button btnReset;
+
     // Constructor
     public Controller(Menu menu, Stage window)
     {
@@ -371,38 +373,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     public void move() throws IOException {
-        if (random)
-            grid.move(size, this);
-        else {
-            int x = GridPane.getColumnIndex(grid.miner);
-            int y = GridPane.getRowIndex(grid.miner);
-
-            // move to the right
-            if (grid.miner.getRotate() == 0 && x >= 0 && x < size - 1) {
-                x++;
-            }
-            // move to the left
-            else if (grid.miner.getRotate() == 180 && x > 0 && x <= size) {
-                x--;
-            }
-            // move down
-            else if (grid.miner.getRotate() == 90 && y >= 0 && y < size - 1) {
-                y++;
-            }
-            // move up
-            else {
-                y--;
-            }
-            Point p = new Point(x, y);
-
-            if (pits.contains(p)) {
-                move.stop();
-                window.setScene(over.buildOver());
-                window.show();
-            }
-            else
-                grid.move(size, this);
-        }
+        grid.move(size, this);
     }
 
     // Random Intelligence Level
@@ -419,7 +390,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     // Determines what is in front of the miner up to the edge of the grid
     // Returns a String of additional commands
-    public String scan(String actions)
+    public String scan(int size, String actions)
     {
         // initial position of miner
         int orientation = 0;
@@ -487,7 +458,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Determines if next move of miner is valid (used in smart intelligence level)
-    public boolean validMove(String actions)
+    public boolean validMove(int size, String actions)
     {
         // initial position of miner
         int orientation = 0;
@@ -508,12 +479,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         Point p = new Point(x, y);
         if (!(x >= 0 && x < size && y >= 0 && y < size))
             return false;
-        else if (pits.contains(new Point(x, y)) ) {
+        else if (pits.contains(new Point(x, y)))
             return false;
-        }
         //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
-        if (!tiles.contains(p))
-            tiles.add(p);
         return true;
     }
 
@@ -524,30 +492,20 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         int orientation = 0;
         int x = 0;
         int y = 0;
-        int r = 0;
         for (int i = 0; i < actions.length(); i++)
         {
             if (actions.charAt(i) == 'm' && orientation == 0)
-            {
                 y++;
-            }
-
             else if (actions.charAt(i) == 'm' && orientation == 90)
                 x++;
             else if (actions.charAt(i) == 'm' && orientation == 180)
                 y--;
             else if (actions.charAt(i) == 'm' && orientation == 270)
                 x--;
-            else
-            {
-                orientation = (orientation + 90) % 360;
-                //r += 1;
-            }
+            else orientation = (orientation + 90) % 360;
         }
-
         if (gold.equals(new Point (x, y))) {
             System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
-
             return true;
         }
         return false;
@@ -566,17 +524,17 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         {
             if (!actions.isEmpty())
                 add = actions.remove();
-            if (scan(put).length() > 0)
+            if (scan(size, put).length() > 0)
             {
-                scan = put + scan(put);
-                if (validMove(scan))
+                scan = put + scan(size, put);
+                if (validMove(size, scan))
                     actions.add(scan);
             }
             else {
                 for (String i : moves)
                 {
                     put = add + i;
-                    if (validMove(put))
+                    if (validMove(size, put))
                         actions.add(put);
                 }
             }
