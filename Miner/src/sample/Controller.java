@@ -6,21 +6,14 @@ import javafx.animation.Timeline;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
@@ -29,6 +22,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private final Grid grid;          // Grid layout
     private final Over over;          // Over layout
     private final Winner winner;      // Winner layout
+    private final NoSol noS;
 
     private int size;           // Grid size
     public boolean random;     // Intelligence level: Random-true, Smart-false
@@ -42,23 +36,21 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private String flow = null;
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
-    ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
-    ArrayList<Point> tiles = new ArrayList<>();
+    ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacon
 
     int smartInd = 0;
 
     Point gold;                 // Coordinate of gold
-
-    @FXML Button btnReset;
 
     // Constructor
     public Controller(Menu menu, Stage window)
     {
         this.menu = menu;
         this.window = window;
-        this.grid = new Grid();
-        this.over = new Over();
-        this.winner = new Winner();
+        grid = new Grid();
+        over = new Over();
+        winner = new Winner();
+        noS = new NoSol();
 
         sizeSet = false;
         goldSet = false;
@@ -67,6 +59,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         menu.setEventHandlers(this);
         over.setEventHandlers(this);
         winner.setEventHandlers(this);
+        noS.setEventHandlers(this);
     }
 
     // Switches from menu window to grid window
@@ -245,7 +238,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         try {
             String input = menu.tfBeacon.getText();
             Scanner a = new Scanner(input);
-            Boolean obstruction = false;
+            boolean obstruction = false;
 
             int x = a.nextInt() - 1;
             int y = a.nextInt() - 1;
@@ -365,15 +358,46 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             window.show();
             move.stop();
         }
-    }
-
-    public boolean foundPit(int x, int y)
-    {
-        return pits.contains(new Point(x, y));
+        else if (noSol) {
+            window.setScene(noS.buildNoSol());
+            window.show();
+            move.stop();
+        }
     }
 
     public void move() throws IOException {
-        grid.move(size, this);
+        if (random)
+            grid.move(size, this);
+        else {
+            int x = GridPane.getColumnIndex(grid.miner);
+            int y = GridPane.getRowIndex(grid.miner);
+
+            // move to the right
+            if (grid.miner.getRotate() == 0 && x >= 0 && x < size - 1) {
+                x++;
+            }
+            // move to the left
+            else if (grid.miner.getRotate() == 180 && x > 0 && x <= size) {
+                x--;
+            }
+            // move down
+            else if (grid.miner.getRotate() == 90 && y >= 0 && y < size - 1) {
+                y++;
+            }
+            // move up
+            else {
+                y--;
+            }
+            Point p = new Point(y, x);
+
+            if (pits.contains(p)) { // noSol
+                move.stop();
+                window.setScene(noS.buildNoSol());
+                window.show();
+            }
+            else
+                grid.move(size, this);
+        }
     }
 
     // Random Intelligence Level
@@ -464,24 +488,45 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         int orientation = 0;
         int x = 0;
         int y = 0;
+        ArrayList<Point> tiles = new ArrayList<>();
+        Point p;
+        tiles.add(new Point(x, y));
+
         for (int i = 0; i < actions.length(); i++)
         {
             if (actions.charAt(i) == 'm' && orientation == 0)
-                y++;
+                p = new Point (x, y+1);
             else if (actions.charAt(i) == 'm' && orientation == 90)
-                x++;
+                p = new Point(x+1, y);
             else if (actions.charAt(i) == 'm' && orientation == 180)
-                y--;
-            else if (actions.charAt(i) == 'm' && orientation == 270)
-                x--;
-            else orientation = (orientation + 90) % 360;
+                p = new Point(x, y - 1);
+            else
+                p = new Point (x - 1, y);
+
+            if (actions.charAt(i) == 'r')
+                orientation = (orientation + 90) % 360;
+            else if (!tiles.contains(p)) {
+                if (actions.charAt(i) == 'm' && orientation == 0)
+                    y++;
+                else if (actions.charAt(i) == 'm' && orientation == 90)
+                    x++;
+                else if (actions.charAt(i) == 'm' && orientation == 180)
+                    y--;
+                else if (actions.charAt(i) == 'm' && orientation == 270)
+                    x--;
+                tiles.add(new Point(x, y));
+            }
+            else return false;
         }
-        Point p = new Point(x, y);
+
         if (!(x >= 0 && x < size && y >= 0 && y < size))
             return false;
         else if (pits.contains(new Point(x, y)))
             return false;
-        //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+        else if (actions.contains("rrrr"))
+            return false;
+
+        System.out.println("VM: " + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
         return true;
     }
 
@@ -505,7 +550,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else orientation = (orientation + 90) % 360;
         }
         if (gold.equals(new Point (x, y))) {
-            System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+            //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
             return true;
         }
         return false;
@@ -519,8 +564,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         String[] moves = {"m", "r"};                // used in smartlvl
         String put = "";                            // used in smartlvl
         String scan = "";
+        ArrayList<String> tries = new ArrayList<>();
 
-        while (!foundGold(add))
+        while (!foundGold(add) && !noSol)
         {
             if (!actions.isEmpty())
                 add = actions.remove();
@@ -529,6 +575,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 scan = put + scan(size, put);
                 if (validMove(size, scan))
                     actions.add(scan);
+                else {
+                    if (!tries.contains(put))
+                        tries.add(put);
+                    else
+                        noSol = true;
+                }
             }
             else {
                 for (String i : moves)
@@ -536,6 +588,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     put = add + i;
                     if (validMove(size, put))
                         actions.add(put);
+                    else {
+                        if (!tries.contains(put))
+                            tries.add(put);
+                        else
+                            noSol = true;
+                    }
                 }
             }
         }
@@ -558,17 +616,58 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void smartLvl() throws IOException {
         credits();
 
-        if (!ifOver() && !ifWinner()) {
+        if (!ifOver() && !ifWinner() && !noSol) {
             switch (smartMove()) {
                 case 'm' -> move();
                 case 'r' -> rotate();
             }
         }
+        else if (noSol) {
+            System.out.println("noSol");
+            window.setScene(noS.buildNoSol());
+            window.show();
+            move.stop();
+        }
+    }
+
+    public boolean isGoldSurrounded() {
+        int x = (int)gold.getX();
+        int y = (int)gold.getY();
+
+        boolean right = true;
+        boolean down = true;
+        boolean left = true;
+        boolean up = true;
+        Point p;
+
+        if (x < size-1) {
+            p = new Point(x+1, y);
+            if (!pits.contains(p))
+                right = false;
+        }
+        if (x > 0) {
+            p = new Point(x-1, y);
+            if (!pits.contains(p))
+                left = false;
+        }
+        if (y < size-1) {
+            p = new Point(x, y+1);
+            if (!pits.contains(p))
+                down = false;
+        }
+        if (y > 0) {
+            p = new Point(x, y-1);
+            if (!pits.contains(p))
+                up = false;
+        }
+
+        return right && down && left && up;
     }
 
     public void execute() {
         // Check if pit/gold is in starting position of miner
-        if (ifOver() || ifWinner()) {
+        //noSol = isGoldSurrounded();
+        if (ifOver() || ifWinner() || (noSol && !random)) {
             move = new Timeline(
                     new KeyFrame(
                             Duration.millis(400), event -> {

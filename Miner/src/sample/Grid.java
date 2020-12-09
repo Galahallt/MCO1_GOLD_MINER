@@ -15,7 +15,8 @@ import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.util.ArrayList;
-import static javafx.scene.paint.Color.BROWN;
+
+import static javafx.scene.paint.Color.*;
 
 public class Grid
 {
@@ -58,6 +59,12 @@ public class Grid
                 new BackgroundSize(1.0, 1.0, true, true, false, false)
         );
         grid.setBackground(new Background(bgImage));
+
+        btnAuto.setStyle("-fx-background-image: url('/sample/wood.png'); -fx-background-position: center; -fx-border-color: BLACK; -fx-border-width: 4;" +
+                "    -fx-stroke-width: 1;");
+        btnAuto.setTextFill(WHITE);
+        btnAuto.setPrefSize(200, 50);
+        btnAuto.setFont(new Font("Cooper Black", 30));
 
         //Debug code
         GridPane.setConstraints(btnAuto, 1, 1);
@@ -123,7 +130,7 @@ public class Grid
         lblStats.setPrefHeight(80);
         lblStats.setPrefWidth(150);
         lblStats.setFont(new Font("Trebuchet MS", 13));
-        lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black");
+        lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black;");
         lblStats.setStyle("-fx-background-color: white;");
         grid.add(lblStats, 0, 0);
 
