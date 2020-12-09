@@ -9,16 +9,16 @@ import javafx.scene.text.Font;
 
 import static javafx.scene.paint.Color.WHITE;
 
-public class Winner
+public class NoSol
 {
     Button btnRetry = new Button ("RETRY");;
 
-    public Scene buildWinner()
+    public Scene buildNoSol()
     {
         AnchorPane anchor = new AnchorPane();
         anchor.setPrefSize(800, 600);
         // Background
-        Image image = new Image("sample/Winner.gif", true);
+        Image image = new Image("sample/NoSol.gif", true);
         BackgroundImage bgImage = new BackgroundImage(
                 image,
                 BackgroundRepeat.NO_REPEAT,
@@ -34,7 +34,7 @@ public class Winner
         btnRetry.setPrefSize(200, 60);
         btnRetry.setFont(new Font("Cooper Black", 36));
         btnRetry.setLayoutX(300);
-        btnRetry.setLayoutY(340);
+        btnRetry.setLayoutY(400);
 
         anchor.getChildren().add(btnRetry);
 

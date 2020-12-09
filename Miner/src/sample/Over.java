@@ -4,10 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import static javafx.scene.paint.Color.WHITE;
 
