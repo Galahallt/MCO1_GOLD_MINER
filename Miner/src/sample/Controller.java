@@ -43,7 +43,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacons
-    ArrayList<Point> tiles = new ArrayList<>();
 
     int smartInd = 0;
 
@@ -243,7 +242,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         try {
             String input = menu.tfBeacon.getText();
             Scanner a = new Scanner(input);
-            Boolean obstruction = false;
+            boolean obstruction = false;
 
             int x = a.nextInt() - 1;
             int y = a.nextInt() - 1;
@@ -363,11 +362,11 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             window.show();
             move.stop();
         }
-    }
-
-    public boolean foundPit(int x, int y)
-    {
-        return pits.contains(new Point(x, y));
+        else if (noSol) {
+            window.setScene(over.buildOver());
+            window.show();
+            move.stop();
+        }
     }
 
     public void move() throws IOException {
@@ -393,9 +392,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else {
                 y--;
             }
-            Point p = new Point(x, y);
+            Point p = new Point(y, x);
 
-            if (pits.contains(p)) {
+            if (pits.contains(p)) { // noSol
                 move.stop();
                 window.setScene(over.buildOver());
                 window.show();
@@ -506,14 +505,16 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else orientation = (orientation + 90) % 360;
         }
         Point p = new Point(x, y);
+
         if (!(x >= 0 && x < size && y >= 0 && y < size))
             return false;
-        else if (pits.contains(new Point(x, y)) ) {
+        else if (pits.contains(p))
             return false;
-        }
-        //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
-        if (!tiles.contains(p))
-            tiles.add(p);
+        else if (actions.contains("rrrr"))
+            return false;
+        else if (actions.length() > 500)
+            return false;
+        System.out.println("VM: " + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
         return true;
     }
 
@@ -537,7 +538,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else orientation = (orientation + 90) % 360;
         }
         if (gold.equals(new Point (x, y))) {
-            System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+            //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
             return true;
         }
         return false;
@@ -547,12 +548,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public String shortestPath()
     {
         Queue<String> actions = new ArrayDeque<>(); // used in smartlvl
+        ArrayList<String> tries = new ArrayList<>();
         String add = "";                            // used in smartlvl
         String[] moves = {"m", "r"};                // used in smartlvl
         String put = "";                            // used in smartlvl
         String scan = "";
 
-        while (!foundGold(add))
+        while (!foundGold(add) && !noSol)
         {
             if (!actions.isEmpty())
                 add = actions.remove();
@@ -561,6 +563,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 scan = put + scan(size, put);
                 if (validMove(size, scan))
                     actions.add(scan);
+                else {
+                    if (!tries.contains(put))
+                        tries.add(put);
+                    else
+                        noSol = true;
+                }
             }
             else {
                 for (String i : moves)
@@ -568,6 +576,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     put = add + i;
                     if (validMove(size, put))
                         actions.add(put);
+                    else {
+                        if (!tries.contains(put))
+                            tries.add(put);
+                        else
+                            noSol = true;
+                    }
                 }
             }
         }
@@ -590,17 +604,58 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void smartLvl() throws IOException {
         credits();
 
-        if (!ifOver() && !ifWinner()) {
+        if (!ifOver() && !ifWinner() && !noSol) {
             switch (smartMove()) {
                 case 'm' -> move();
                 case 'r' -> rotate();
             }
         }
+        else if (noSol) {
+            System.out.println("noSol");
+            window.setScene(over.buildOver());
+            window.show();
+            move.stop();
+        }
+    }
+
+    public boolean isGoldSurrounded() {
+        int x = (int)gold.getX();
+        int y = (int)gold.getY();
+
+        boolean right = true;
+        boolean down = true;
+        boolean left = true;
+        boolean up = true;
+        Point p;
+
+        if (x < size-1) {
+            p = new Point(x+1, y);
+            if (!pits.contains(p))
+                right = false;
+        }
+        if (x > 0) {
+            p = new Point(x-1, y);
+            if (!pits.contains(p))
+                left = false;
+        }
+        if (y < size-1) {
+            p = new Point(x, y+1);
+            if (!pits.contains(p))
+                down = false;
+        }
+        if (y > 0) {
+            p = new Point(x, y-1);
+            if (!pits.contains(p))
+                up = false;
+        }
+
+        return right && down && left && up;
     }
 
     public void execute() {
         // Check if pit/gold is in starting position of miner
-        if (ifOver() || ifWinner()) {
+        noSol = isGoldSurrounded();
+        if (ifOver() || ifWinner() || (noSol && !random)) {
             move = new Timeline(
                     new KeyFrame(
                             Duration.millis(400), event -> {
