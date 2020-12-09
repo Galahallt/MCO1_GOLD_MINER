@@ -6,21 +6,14 @@ import javafx.animation.Timeline;
 import javafx.event.*;
 import javafx.event.Event;
 import javafx.beans.value.*; // ChangeListener
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Controller implements EventHandler<Event>, ChangeListener<String>
 {
@@ -29,6 +22,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     private final Grid grid;          // Grid layout
     private final Over over;          // Over layout
     private final Winner winner;      // Winner layout
+    private final NoSol noS;
 
     private int size;           // Grid size
     public boolean random;     // Intelligence level: Random-true, Smart-false
@@ -53,9 +47,10 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     {
         this.menu = menu;
         this.window = window;
-        this.grid = new Grid();
-        this.over = new Over();
-        this.winner = new Winner();
+        grid = new Grid();
+        over = new Over();
+        winner = new Winner();
+        noS = new NoSol();
 
         sizeSet = false;
         goldSet = false;
@@ -64,6 +59,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         menu.setEventHandlers(this);
         over.setEventHandlers(this);
         winner.setEventHandlers(this);
+        noS.setEventHandlers(this);
     }
 
     // Switches from menu window to grid window
@@ -363,7 +359,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move.stop();
         }
         else if (noSol) {
-            window.setScene(over.buildOver());
+            window.setScene(noS.buildNoSol());
             window.show();
             move.stop();
         }
@@ -396,7 +392,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
             if (pits.contains(p)) { // noSol
                 move.stop();
-                window.setScene(over.buildOver());
+                window.setScene(noS.buildNoSol());
                 window.show();
             }
             else
@@ -612,7 +608,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
         else if (noSol) {
             System.out.println("noSol");
-            window.setScene(over.buildOver());
+            window.setScene(noS.buildNoSol());
             window.show();
             move.stop();
         }
