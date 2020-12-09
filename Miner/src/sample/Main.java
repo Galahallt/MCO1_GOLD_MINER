@@ -6,6 +6,7 @@ import javafx.geometry.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ public class Main extends Application {
 
         window = primaryStage;
         window.setTitle("Gold Miner");
+        window.getIcons().add(new Image("sample/Gold.png"));
 
         window.setScene(menu.buildMenu());
         new Controller(menu, window);
