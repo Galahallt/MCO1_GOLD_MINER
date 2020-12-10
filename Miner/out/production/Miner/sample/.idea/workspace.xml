@@ -20,9 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdf0df2e-c502-49eb-b826-4b4f6170ce30" name="Default Changelist" comment="NoSol(JamesStyle)+Graphics2">
-      <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Miner/sample/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../../Program Files/Java/javafx-sdk-15/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../../../../../../../Program Files/Java/javafx-sdk-15/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -331,30 +330,30 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="596" y="261" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.864@0.0.1536.864" timestamp="1606304466130" />
-    <state x="621" y="200" key="FileChooserDialogImpl" timestamp="1607511435991">
+    <state x="621" y="200" key="FileChooserDialogImpl" timestamp="1607601846071">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607511435991" />
+    <state x="621" y="200" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1607601846071" />
     <state x="776" y="241" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607406814395" />
-    <state width="1122" height="117" key="GridCell.Tab.0.bottom" timestamp="1607578334443">
+    <state width="1122" height="118" key="GridCell.Tab.0.bottom" timestamp="1607601281940">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="117" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607578334443" />
+    <state width="1122" height="118" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607601281940" />
     <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607502574526" />
-    <state width="1122" height="117" key="GridCell.Tab.0.center" timestamp="1607578334443">
+    <state width="1122" height="118" key="GridCell.Tab.0.center" timestamp="1607601281939">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="117" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607578334443" />
+    <state width="1122" height="118" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607601281939" />
     <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607502574526" />
-    <state width="1122" height="117" key="GridCell.Tab.0.left" timestamp="1607578334443">
+    <state width="1122" height="118" key="GridCell.Tab.0.left" timestamp="1607601281939">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="117" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607578334443" />
+    <state width="1122" height="118" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607601281939" />
     <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607502574526" />
-    <state width="1122" height="117" key="GridCell.Tab.0.right" timestamp="1607578334443">
+    <state width="1122" height="118" key="GridCell.Tab.0.right" timestamp="1607601281939">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1122" height="117" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607578334443" />
+    <state width="1122" height="118" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607601281939" />
     <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607502574526" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1607247793824">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -376,10 +375,10 @@
     </state>
     <state width="1122" height="245" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607240050799" />
     <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607247793824" />
-    <state x="438" y="14" key="SettingsEditor" timestamp="1607511439025">
+    <state x="438" y="14" key="SettingsEditor" timestamp="1607601848663">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607511439025" />
+    <state x="438" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607601848663" />
     <state x="548" y="17" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607406817160" />
     <state x="772" y="334" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1607241176317">
       <screen x="0" y="0" width="1920" height="1040" />

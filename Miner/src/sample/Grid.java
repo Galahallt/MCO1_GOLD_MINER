@@ -128,13 +128,12 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("\tSTATS\t\nMoves:\t     " + move + "\nRotations:    "
+        lblStats = new Label("\tSTATS\nMoves:\t     " + move + "\nRotations:    "
                 + rotation + "\nScans:\t     " + scan + "\n");
         lblStats.setStyle("-fx-background-image: url('/sample/wood.png');" +
                 "-fx-border-width: 2; -fx-border-color: black; -fx-background-position: center;");
         lblStats.setPrefHeight(100);
         lblStats.setPrefWidth(150);
-        lblStats.setAlignment(Pos.CENTER);
         lblStats.setFont(new Font("Century Gothic Bold", 18));
         lblStats.setTextFill(WHITE);
         grid.add(lblStats, 0, 0);
