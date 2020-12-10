@@ -37,6 +37,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
 
     ArrayList<Point> pits = new ArrayList<>();      // Arraylist of coordinates for pits
     ArrayList<Point> beacons = new ArrayList<>();   // Arraylist of coordinates for beacon
+    ArrayList<Point> visited = new ArrayList<>();
 
     int smartInd = 0;
 
@@ -351,18 +352,23 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
+            System.out.println("over");
             move.stop();
         }
         else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
+            System.out.println("winner");
             move.stop();
         }
+        /*
         else if (noSol) {
             window.setScene(noS.buildNoSol());
             window.show();
             move.stop();
         }
+
+         */
     }
 
     public void move() throws IOException {
@@ -525,6 +531,9 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             return false;
         else if (actions.contains("rrrr"))
             return false;
+        if (visited.contains(new Point(x, y)) && actions.charAt(actions.length()-1) != 'r')
+            return false;
+        else visited.add(new Point(x, y));
 
         System.out.println("VM: " + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
         return true;
@@ -575,12 +584,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 scan = put + scan(size, put);
                 if (validMove(size, scan))
                     actions.add(scan);
-                else {
-                    if (!tries.contains(put))
-                        tries.add(put);
-                    else
-                        noSol = true;
-                }
             }
             else {
                 for (String i : moves)
@@ -605,8 +608,14 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     {
         if (flow == null)
             flow = shortestPath();
-
-        Character smartMove = flow.charAt(smartInd);
+        Character smartMove = 's';
+        if (smartInd < flow.length())
+             smartMove = flow.charAt(smartInd);
+        else {
+            window.setScene(noS.buildNoSol());
+            window.show();
+            move.stop();
+        }
         smartInd++;
 
         return smartMove;
@@ -616,57 +625,16 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     public void smartLvl() throws IOException {
         credits();
 
-        if (!ifOver() && !ifWinner() && !noSol) {
+        if (!ifOver() && !ifWinner()) {
             switch (smartMove()) {
                 case 'm' -> move();
                 case 'r' -> rotate();
             }
         }
-        else if (noSol) {
-            System.out.println("noSol");
-            window.setScene(noS.buildNoSol());
-            window.show();
-            move.stop();
-        }
     }
 
-    public boolean isGoldSurrounded() {
-        int x = (int)gold.getX();
-        int y = (int)gold.getY();
-
-        boolean right = true;
-        boolean down = true;
-        boolean left = true;
-        boolean up = true;
-        Point p;
-
-        if (x < size-1) {
-            p = new Point(x+1, y);
-            if (!pits.contains(p))
-                right = false;
-        }
-        if (x > 0) {
-            p = new Point(x-1, y);
-            if (!pits.contains(p))
-                left = false;
-        }
-        if (y < size-1) {
-            p = new Point(x, y+1);
-            if (!pits.contains(p))
-                down = false;
-        }
-        if (y > 0) {
-            p = new Point(x, y-1);
-            if (!pits.contains(p))
-                up = false;
-        }
-
-        return right && down && left && up;
-    }
-
-    public void execute() {
+    public void execute() throws IOException {
         // Check if pit/gold is in starting position of miner
-        //noSol = isGoldSurrounded();
         if (ifOver() || ifWinner() || (noSol && !random)) {
             move = new Timeline(
                     new KeyFrame(
@@ -767,9 +735,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Set Beacons" -> setBeacons();
                 case "Rotate" -> rotate();
                 case "Move" -> move();
-                case "Execute" -> {
-                    execute();
-                }
+                case "Execute" -> execute();
                 case "RETRY" -> retry();
                 //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
                 //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
