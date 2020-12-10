@@ -128,8 +128,8 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("\tSTATS\nMoves:\t     " + move + "\nRotations:    "
-                + rotation + "\nScans:\t     " + scan + "\n");
+        lblStats = new Label("\tSTATS\n  Moves:\t       " + move + "\n  Rotations:    "
+                + rotation + "\n  Scans:\t       " + scan);
         lblStats.setStyle("-fx-background-image: url('/sample/wood.png');" +
                 "-fx-border-width: 2; -fx-border-color: black; -fx-background-position: center;");
         lblStats.setPrefHeight(100);
@@ -162,7 +162,8 @@ public class Grid
 
     public void updateStats()
     {
-        lblStats.setText("  Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:    " + rotation + "\n\tScans:\t   " + scan + "\n");
+        lblStats.setText("\tSTATS\n  Moves:\t       " + move + "\n  Rotations:    "
+                + rotation + "\n  Scans:\t       " + scan);
     }
 
     public void rotate()
