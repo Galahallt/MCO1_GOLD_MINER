@@ -3,6 +3,7 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -126,12 +128,15 @@ public class Grid
 
 
         //Stats label
-        lblStats = new Label("  Stats:\t\n\tMoves:\t   " + move + "\n\tRotations:    " + rotation + "\n\tScans:\t   " + scan + "\n");
-        lblStats.setPrefHeight(80);
+        lblStats = new Label("\tSTATS\t\nMoves:\t     " + move + "\nRotations:    "
+                + rotation + "\nScans:\t     " + scan + "\n");
+        lblStats.setStyle("-fx-background-image: url('/sample/wood.png');" +
+                "-fx-border-width: 2; -fx-border-color: black; -fx-background-position: center;");
+        lblStats.setPrefHeight(100);
         lblStats.setPrefWidth(150);
-        lblStats.setFont(new Font("Trebuchet MS", 13));
-        lblStats.setStyle("-fx-border-width: 2; -fx-border-color: black;");
-        lblStats.setStyle("-fx-background-color: white;");
+        lblStats.setAlignment(Pos.CENTER);
+        lblStats.setFont(new Font("Century Gothic Bold", 18));
+        lblStats.setTextFill(WHITE);
         grid.add(lblStats, 0, 0);
 
         //for row 1
