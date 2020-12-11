@@ -46,6 +46,7 @@ public class Grid
     // Scene builder
     public Scene buildGrid(int size, ArrayList<Point> pits, ArrayList<Point> beacons, Point goldPot)
     {
+        System.out.println("LEGEND:\nm = move\nr = rotate");
         this.size = size;
         this.pits = pits;
         this.beacons = beacons;

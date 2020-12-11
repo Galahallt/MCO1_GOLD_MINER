@@ -144,7 +144,6 @@ public class Menu
 
         //Pit Text Area Coordinates
         taPit = new TextArea();
-        taPit.setDisable(true);
         taPit.setStyle("-fx-opacity: 1;");
         GridPane.setConstraints(taPit, 0, 7);
 
@@ -191,7 +190,6 @@ public class Menu
 
         //Beacon Text Area Coordinates
         taBeacon = new TextArea();
-        taBeacon.setDisable(true);
         taBeacon.setStyle("-fx-opacity: 1;");
         GridPane.setConstraints(taBeacon, 1, 7);
 
