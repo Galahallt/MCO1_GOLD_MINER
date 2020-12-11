@@ -352,23 +352,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
-            System.out.println("over");
             move.stop();
         }
         else if (ifWinner()) {
             window.setScene(winner.buildWinner());
             window.show();
-            System.out.println("winner");
             move.stop();
         }
-        /*
-        else if (noSol) {
-            window.setScene(noS.buildNoSol());
-            window.show();
-            move.stop();
-        }
-
-         */
     }
 
     public void move() throws IOException {
@@ -535,7 +525,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             return false;
         else visited.add(new Point(x, y));
 
-        System.out.println("VM: " + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+        System.out.println("VM: " + actions + " = [" + (x + 1) + ", " + (y + 1) + "]" + " OR: " + orientation);
         return true;
     }
 
