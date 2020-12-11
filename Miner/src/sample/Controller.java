@@ -348,7 +348,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Display credits if game is finished
-    public void credits() throws IOException {
+    public void credits() {
         if (ifOver()) {
             window.setScene(over.buildOver());
             window.show();
@@ -361,7 +361,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void move() throws IOException {
+    public void move() {
         if (random)
             grid.move(size, this);
         else {
@@ -397,7 +397,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Random Intelligence Level
-    public void randLvl() throws IOException {
+    public void randLvl() {
         credits();
 
         Random rand = new Random();
@@ -612,7 +612,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
     }
 
     // Smart Intelligence Level
-    public void smartLvl() throws IOException {
+    public void smartLvl(){
         credits();
 
         if (!ifOver() && !ifWinner()) {
@@ -623,17 +623,13 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
         }
     }
 
-    public void execute() throws IOException {
+    public void execute() {
         // Check if pit/gold is in starting position of miner
         if (ifOver() || ifWinner() || (noSol && !random)) {
             move = new Timeline(
                     new KeyFrame(
                             Duration.millis(400), event -> {
-                        try {
-                            credits();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        credits();
                     }
                     )
             );
@@ -645,11 +641,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move = new Timeline(
                     new KeyFrame(
                             Duration.millis(400), event -> {
-                        try {
-                            randLvl();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        randLvl();
                     }
                     )
             );
@@ -664,11 +656,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             move = new Timeline(new KeyFrame(Duration.millis(400)),
                     new KeyFrame(
                             Duration.millis(400), event -> {
-                        try {
-                            smartLvl();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        smartLvl();
                     }
                     )
             );
