@@ -145,7 +145,12 @@ public class Menu
         //Pit Text Area Coordinates
         taPit = new TextArea();
         taPit.setStyle("-fx-opacity: 1;");
-        GridPane.setConstraints(taPit, 0, 7);
+        taPit.setDisable(true);
+        taPit.setPrefSize(170, 800);
+        ScrollPane pScroll = new ScrollPane(taPit);
+        pScroll.setFitToWidth(true);
+        pScroll.setVmax(800);
+        grid.add(pScroll, 0, 7);
 
         //Beacon label
         Label lblBeacon = new Label("Beacon");
@@ -190,8 +195,13 @@ public class Menu
 
         //Beacon Text Area Coordinates
         taBeacon = new TextArea();
+        taBeacon.setPrefSize(170, 800);
         taBeacon.setStyle("-fx-opacity: 1;");
-        GridPane.setConstraints(taBeacon, 1, 7);
+        taBeacon.setDisable(true);
+        ScrollPane bScroll = new ScrollPane(taBeacon);
+        bScroll.setFitToWidth(true);
+        bScroll.setVmax(800);
+        grid.add(bScroll, 1, 7);
 
         //Gold Tile label
         Label lblGold = new Label("Gold Tile");
