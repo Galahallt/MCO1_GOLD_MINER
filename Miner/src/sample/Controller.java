@@ -543,7 +543,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else orientation = (orientation + 90) % 360;
         }
         if (gold.equals(new Point (x, y))) {
-            System.out.println("FOUND:" + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+            System.out.println("FOUND: " + actions + " = [" + (x + 1) + ", " + (y + 1) + "]" + " OR: " + orientation);
             return true;
         }
         return false;
