@@ -444,17 +444,12 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     else if (orientation == 270)
                         x--;
                     add += 'm';
-                    //System.out.println("beacon tile: " + "[" + x + ", " + y + "]");
                 }
-
-                //System.out.println("beacon tile: " + "[" + x + ", " + y + "]");
                 // rotate on the beacon tile until scanned is 'g'
                 while (grid.scan(x, y, orientation) != "g")
                 {
                     orientation = (orientation + 90) % 360;
                     add += 'r';
-                    //System.out.println("OR: " + orientation);
-                    //System.out.println(grid.scan(x, y, orientation));
                 }
             }
             // move until miner is on the gold tile
@@ -469,7 +464,6 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                     else if (orientation == 270)
                         x--;
                     add += 'm';
-                    //System.out.println("gold tile: " + "[" + x + ", " + y + "]");
                 }
                 return add;
             }
@@ -525,7 +519,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             return false;
         else visited.add(new Point(x, y));
 
-        System.out.println("VM: " + actions + " = [" + (x + 1) + ", " + (y + 1) + "]" + " OR: " + orientation);
+        System.out.println("VALID: " + actions + " = [" + (x + 1) + ", " + (y + 1) + "]" + " OR: " + orientation);
         return true;
     }
 
@@ -549,7 +543,7 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
             else orientation = (orientation + 90) % 360;
         }
         if (gold.equals(new Point (x, y))) {
-            //System.out.println(actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
+            System.out.println("FOUND:" + actions + " = [" + x + ", " + y + "]" + " OR: " + orientation);
             return true;
         }
         return false;
@@ -711,12 +705,8 @@ public class Controller implements EventHandler<Event>, ChangeListener<String>
                 case "Set Pits" -> setPits();
                 // Debug Miner Movement
                 case "Set Beacons" -> setBeacons();
-                case "Rotate" -> rotate();
-                case "Move" -> move();
                 case "Execute" -> execute();
                 case "RETRY" -> retry();
-                //case "Scan" -> scan(GridPane.getRowIndex(grid.miner),
-                //        GridPane.getColumnIndex(grid.miner), (int) grid.miner.getRotate());
             }
         }
     }
