@@ -3,7 +3,6 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -122,7 +120,6 @@ public class Grid
         ImageView gold = new ImageView("sample/Gold.png");
         gold.setFitHeight(50);
         gold.setFitWidth(50);
-        //GridPane.setConstraints(gold, (int) goldPot.getX(), (int) goldPot.getY());
         gridBoard.add(gold, (int) goldPot.getY(), (int) goldPot.getX());
 
         gridBoard.add(miner, 0, 0);
@@ -154,8 +151,7 @@ public class Grid
 
         grid.getColumnConstraints().addAll(col1, col2);
         grid.getRowConstraints().addAll(row1, row2);
-        //Debug Grid
-        //grid.setGridLinesVisible(true);
+
         Scene scene = new Scene(grid, 800, 600);
 
         return scene;
@@ -207,17 +203,14 @@ public class Grid
         else System.out.println("Miner moves out of bounds!");
 
         updateStats();
-        //System.out.println("(" + GridPane.getColumnIndex(miner) + ", " + GridPane.getRowIndex(miner) + ")");
     }
 
-    // 0empty, 1pit, 2beacon, 3gold
+    // "null" empty, 'p' pit, 'b' beacon, 'g' gold
     public String scan(int x, int y, int orientation) {
         Point p;
         if (cont.random)
             scan++;
         updateStats();
-
-        ArrayList<Integer> result = new ArrayList<>();
 
         switch (orientation) {
             case 0 -> {     // Looking Right
