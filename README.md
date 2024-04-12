@@ -1,7 +1,7 @@
 # MCO1 | Gold Miner
 The objective of the gold miner is to find the shortest path to the gold mine. Other than the gold mine, the miner needs to consider the following special tiles to calculate the best route to the gold mine:
 - `Pit` → the miner falls into the pit and unsucessfully finds the gold mine
-- `Beacon` → aids the miner in finding the gold mine since it provides a straight horizontal/vertical line to the gold mine without any `pits` in between
+- `Beacon` → aids the miner in finding the gold mine since it provides a straight horizontal/vertical line to the gold mine without any pits in between
 
 The miner can perform the following actions:
 - `Scan` → checks the tiles in a line where the miner is facing
